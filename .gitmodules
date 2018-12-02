@@ -1,0 +1,3 @@
+[submodule "rlib"]
+	path = rlib
+	url = https://github.com/ricardo-nini/python-lib.git
