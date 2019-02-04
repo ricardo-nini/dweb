@@ -8,14 +8,14 @@ import socket
 import time
 import dlib.dsocket as dsocket
 import logging
-from rlib.common import RData
-from dlib.dcommon import GLOBAL, DResetTypes, CONST
+from rlib.common import RData, CONST
+from dlib.dcommon import GLOBAL, DResetTypes
 from dlib.dconfig import CONFIG
 from dlib.dstatus import STATUS
 
 
 # =============================================================================#
-class DSendStack(threading.Thread):
+class DStack(threading.Thread):
     threadLock = threading.Lock()
 
     def __init__(self):
@@ -36,11 +36,11 @@ class DSendStack(threading.Thread):
         self.logger.info('Iniciando DStack -> {}'.format(self._config.str()))
         try:
             self._con = self._create_db(self._dbfile)
-            DSendStack.threadLock.acquire()
+            DStack.threadLock.acquire()
             try:
                 self._count = self._count + self._count_rows()
             finally:
-                DSendStack.threadLock.release()
+                DStack.threadLock.release()
             self.logger.debug('Backup DB com {} mensagens.'.format(self._count))
             t = int(time.time() / 60)
             try:
@@ -57,9 +57,9 @@ class DSendStack(threading.Thread):
                             f, r = self._send(d)
                             if f:
                                 self._pop_db(d[0])
-                                DSendStack.threadLock.acquire()
+                                DStack.threadLock.acquire()
                                 self._count = self._count - 1
-                                DSendStack.threadLock.release()
+                                DStack.threadLock.release()
                                 if r:
                                     GLOBAL.reset = DResetTypes.HARD_RESET
                                 t = time.time()
@@ -87,7 +87,7 @@ class DSendStack(threading.Thread):
         self._stop_event.wait(timeout)
 
     def is_empty(self):
-        DSendStack.threadLock.acquire()
+        DStack.threadLock.acquire()
         con = None
         try:
             con = self._create_db(self._dbfile)
@@ -101,10 +101,10 @@ class DSendStack(threading.Thread):
         finally:
             if con:
                 con.close()
-            DSendStack.threadLock.release()
+            DStack.threadLock.release()
 
     def put(self, priority, timestamp, header, data=None):
-        DSendStack.threadLock.acquire()
+        DStack.threadLock.acquire()
         con = None
         try:
             con = self._create_db(self._dbfile)
@@ -128,7 +128,7 @@ class DSendStack(threading.Thread):
         finally:
             if con:
                 con.close()
-            DSendStack.threadLock.release()
+            DStack.threadLock.release()
 
     def _create_db(self, dbfile):
         db_is_new = not os.path.exists(dbfile)

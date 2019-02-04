@@ -5,13 +5,12 @@ import threading
 import logging
 import socket
 import time
-from rlib.common import RData, get_ip_from_iface
+from rlib.common import RData, get_ip_from_iface, CONST
 import dlib.dsocket as dsocket
-from dlib.dcommon import CONST, DEVICES_CATALOG
+from dlib.dcommon import DEVICES_CATALOG
 from dlib.dstatus import STATUS
 from dlib.dconfig import DConfig_Listen, CONFIG
 import dlib._dlisten as listen_function
-
 
 # =============================================================================#
 class DListen_Process(threading.Thread):

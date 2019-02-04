@@ -118,7 +118,7 @@ class DWeb(rdaemon.Daemonize):
             self.activate_modbus()
 
             # inicia stack
-            self.stack = dstack.DSendStack()
+            self.stack = dstack.DStack()
             self.stack.start()
             time.sleep(2)  # wait for stack start ...
 

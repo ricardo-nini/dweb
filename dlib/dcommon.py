@@ -119,7 +119,7 @@ class DResetTypes(enum.Enum):
 
 
 # =============================================================================#
-class DWebGlobal(object):
+class DGlobal(object):
     def __init__(self, boot=True, setup=False):
         self.modbus = {}
         self.boot = boot
@@ -154,7 +154,7 @@ class DWebGlobal(object):
 
 
 # =============================================================================#
-GLOBAL = DWebGlobal()
+GLOBAL = DGlobal()
 
 
 # =============================================================================#
