@@ -2,30 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f68a0010-75ce-4f55-bb71-5fc3fa839422" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dlib/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dlib/_dlisten.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dlib/dalive.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dlib/dcommon.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dlib/dlisten.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dlib/dsocket.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dlib/dstack.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dlib/dstatus.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dweb.id" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dweb.ini" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dweb.log.ini" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dweb.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/logtest.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/rlib/rmodbus.def.ini" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/srvtest.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/rlib/_rmodbus.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/rlib/_rserial.py" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dlib/dconfig.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dlib/devices/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dlib/devices/pextron/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dlib/devices/pextron/urp1439tu.ini" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dlib/devices/pextron/urp1439tu.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dlib/devices/pextron/urpe7104.ini" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dlib/devices/pextron/urpe7104_v7_18.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dlib/devices/schneider/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dlib/devices/schneider/sepam40.ini" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dlib/devices/schneider/sepam40.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dlib/devices/unilojas/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dlib/devices/unilojas/c001.ini" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dlib/devices/unilojas/c001.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dlib/dreport.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dlib/dslave.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dweb.doc.ini" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dweb.service" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rlib" afterPath="$PROJECT_DIR$/rlib" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dlib/_dlisten.py" afterPath="$PROJECT_DIR$/dlib/_dlisten.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dlib/dalive.py" afterPath="$PROJECT_DIR$/dlib/dalive.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dlib/dcommon.py" afterPath="$PROJECT_DIR$/dlib/dcommon.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dlib/dlisten.py" afterPath="$PROJECT_DIR$/dlib/dlisten.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dlib/dstack.py" afterPath="$PROJECT_DIR$/dlib/dstack.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dweb.ini" afterPath="$PROJECT_DIR$/dweb.ini" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dweb.py" afterPath="$PROJECT_DIR$/dweb.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rlib/common.py" afterPath="$PROJECT_DIR$/rlib/common.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rlib/rdaemon.py" afterPath="$PROJECT_DIR$/rlib/rdaemon.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rlib/rgpio.py" afterPath="$PROJECT_DIR$/rlib/rgpio.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rlib/rmodbus.ini" afterPath="$PROJECT_DIR$/rlib/rmodbus.ini" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rlib/rmodbus.py" afterPath="$PROJECT_DIR$/rlib/rmodbus.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rlib/ropenvpn.py" afterPath="$PROJECT_DIR$/rlib/ropenvpn.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rlib/rserial.py" afterPath="$PROJECT_DIR$/rlib/rserial.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -37,7 +43,7 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/dweb$rserial.coverage" NAME="rserial Coverage Results" MODIFIED="1544400783764" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rlib" />
-    <SUITE FILE_PATH="coverage/dweb$dweb.coverage" NAME="dweb Coverage Results" MODIFIED="1549032031436" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/dweb$dweb.coverage" NAME="dweb Coverage Results" MODIFIED="1549243391639" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/dweb$srvtest.coverage" NAME="srvtest Coverage Results" MODIFIED="1544300644346" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/dweb$common.coverage" NAME="common Coverage Results" MODIFIED="1544400980954" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rlib" />
     <SUITE FILE_PATH="coverage/dweb$rmodbus.coverage" NAME="rmodbus Coverage Results" MODIFIED="1544401391460" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rlib" />
@@ -49,11 +55,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="dweb.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="dweb.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dweb.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="74">
-              <caret line="195" column="0" lean-forward="false" selection-start-line="195" selection-start-column="0" selection-end-line="195" selection-end-column="0" />
+            <state relative-caret-position="437">
+              <caret line="335" column="0" lean-forward="true" selection-start-line="335" selection-start-column="0" selection-end-line="335" selection-end-column="0" />
               <folding>
                 <element signature="e#44#59#0" expanded="true" />
               </folding>
@@ -61,103 +67,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="rdaemon.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rlib/rdaemon.py">
+      <file leaf-file-name="urpe7104_v7_18.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dlib/devices/pextron/urpe7104_v7_18.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="55" column="8" lean-forward="false" selection-start-line="55" selection-start-column="8" selection-end-line="55" selection-end-column="8" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dstatus.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dlib/dstatus.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="7" column="34" lean-forward="true" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dlisten.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/dlib/dlisten.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="624">
-              <caret line="170" column="34" lean-forward="false" selection-start-line="170" selection-start-column="34" selection-end-line="170" selection-end-column="34" />
-              <folding>
-                <element signature="e#44#60#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="rmodbus.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rlib/rmodbus.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="13294">
-              <caret line="787" column="25" lean-forward="false" selection-start-line="787" selection-start-column="25" selection-end-line="787" selection-end-column="25" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dweb.ini" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dweb.ini">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="531">
-              <caret line="188" column="0" lean-forward="false" selection-start-line="188" selection-start-column="0" selection-end-line="188" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="common.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rlib/common.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="9792">
-              <caret line="590" column="6" lean-forward="false" selection-start-line="590" selection-start-column="6" selection-end-line="590" selection-end-column="6" />
-              <folding>
-                <element signature="e#44#57#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dalive.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dlib/dalive.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="471">
-              <caret line="146" column="19" lean-forward="false" selection-start-line="146" selection-start-column="19" selection-end-line="146" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dstack.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dlib/dstack.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="149" column="37" lean-forward="true" selection-start-line="149" selection-start-column="37" selection-end-line="149" selection-end-column="37" />
-              <folding>
-                <marker date="1549031777589" expanded="true" signature="5713:5736" ph="SELECT * FRO... sendstack" />
-                <marker date="1549031777589" expanded="true" signature="6318:6430" ph="INSERT INTO sendstack... " />
-                <marker date="1549031777589" expanded="true" signature="7476:7725" ph="CREATE TABLE... IF" />
-                <marker date="1549031777589" expanded="true" signature="7838:7908" ph="SELECT * FRO... sendstack" />
-                <marker date="1549031777589" expanded="true" signature="8163:8215" ph="DELETE FROM " />
-                <marker date="1549031777589" expanded="true" signature="8468:8498" ph="SELECT COUNT... sendstack" />
-                <marker date="1549031777589" expanded="true" signature="11203:11267" ph="UPDATE sends... " />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dcommon.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dlib/dcommon.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="327">
-              <caret line="98" column="0" lean-forward="false" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
+            <state relative-caret-position="301">
+              <caret line="529" column="25" lean-forward="true" selection-start-line="529" selection-start-column="25" selection-end-line="529" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -174,35 +88,49 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>RPair</find>
-      <find>RConfig</find>
-      <find>_UNS</find>
-      <find>DEF_RECV_BUFFER</find>
-      <find>sigterm</find>
-      <find>pid</find>
-      <find>self.pid</find>
-      <find>RECV_BUFFER</find>
-      <find>_U</find>
-      <find>const</find>
-      <find>threading</find>
-      <find>lock</find>
-      <find>syslogger</find>
-      <find>logger</find>
-      <find>RConfigError</find>
-      <find>send_alive_now</find>
-      <find>send_alive_function</find>
-      <find>pextron_urp1439tu</find>
-      <find>common</find>
-      <find>9094</find>
       <find>CONFIG</find>
       <find>raise</find>
       <find>chdir</find>
-      <find>DWebConfig</find>
-      <find>DCONST</find>
       <find>webglobal</find>
+      <find>SLAVES_CATALOG</find>
+      <find>DWebConfig</find>
+      <find>RConfigError</find>
+      <find>_config.conf</find>
+      <find>write</find>
+      <find>lockfile</find>
+      <find>JOIN_TIMEOUT</find>
+      <find>DWEBGLOBAL</find>
+      <find>DSTATUS</find>
+      <find>DWEB_CONFIG</find>
+      <find>self.id</find>
+      <find>DAlarmRele_Pextron_URP1439TU</find>
+      <find>DAlarmRele_Pextron_URPE7104</find>
+      <find>DAlarmRele_Schneider_SEPAM40</find>
+      <find>DC001Report</find>
+      <find>DSlave_Thread</find>
+      <find>_config</find>
+      <find>const</find>
+      <find>dslave</find>
+      <find>CONST</find>
+      <find>label</find>
+      <find>_pinlock</find>
+      <find>DCONST</find>
+      <find>stop_jobs</find>
+      <find>_meter_alar</find>
+      <find>check_event</find>
     </findStrings>
     <replaceStrings>
+      <replace>GLOBAL</replace>
+      <replace>STATUS</replace>
+      <replace>CONFIG</replace>
+      <replace>ID</replace>
+      <replace>DPextron_URP1439TU_AlarmeRele</replace>
+      <replace>DPextron_URPE7104_AlarmRele</replace>
+      <replace>DSchneider_SEPAM40_AlarmRele</replace>
+      <replace>DUnilojas_C001_Report</replace>
+      <replace>config</replace>
       <replace>CONST</replace>
+      <replace>local</replace>
     </replaceStrings>
     <dirStrings>
       <dir>D:\demandaweb\software\github\dweb</dir>
@@ -222,24 +150,36 @@
         <option value="$PROJECT_DIR$/dlib/dglobal.py" />
         <option value="$PROJECT_DIR$/rlib/rserial.def.ini" />
         <option value="$PROJECT_DIR$/rlib/rserial.ini" />
-        <option value="$PROJECT_DIR$/rlib/rserial.py" />
-        <option value="$PROJECT_DIR$/rlib/rmodbus.py" />
-        <option value="$PROJECT_DIR$/rlib/rdaemon.py" />
         <option value="$PROJECT_DIR$/dweb.log.ini" />
         <option value="$PROJECT_DIR$/dweb.def.ini" />
         <option value="$PROJECT_DIR$/dlib/dsocket.py" />
-        <option value="$PROJECT_DIR$/dlib/_dlisten.py" />
         <option value="$PROJECT_DIR$/dweb.doc.ini.py" />
-        <option value="$PROJECT_DIR$/dweb.doc.ini" />
-        <option value="$PROJECT_DIR$/rlib/rgpio.py" />
-        <option value="$PROJECT_DIR$/rlib/common.py" />
-        <option value="$PROJECT_DIR$/dweb.ini" />
         <option value="$PROJECT_DIR$/dlib/dstatus.py" />
-        <option value="$PROJECT_DIR$/dlib/dcommon.py" />
+        <option value="$PROJECT_DIR$/dlib/_dlisten.py" />
+        <option value="$PROJECT_DIR$/rlib/common.py" />
+        <option value="$PROJECT_DIR$/rlib/rserial.py" />
+        <option value="$PROJECT_DIR$/rlib/rmodbus.py" />
+        <option value="$PROJECT_DIR$/dweb.service" />
+        <option value="$PROJECT_DIR$/rlib/rdaemon.py" />
+        <option value="$PROJECT_DIR$/dlib/dreport.py" />
         <option value="$PROJECT_DIR$/dlib/dalive.py" />
-        <option value="$PROJECT_DIR$/dweb.py" />
         <option value="$PROJECT_DIR$/dlib/dstack.py" />
         <option value="$PROJECT_DIR$/dlib/dlisten.py" />
+        <option value="$PROJECT_DIR$/dweb.doc.ini" />
+        <option value="$PROJECT_DIR$/dlib/devices/unilojas/c001.ini" />
+        <option value="$PROJECT_DIR$/dlib/dcommon.py" />
+        <option value="$PROJECT_DIR$/rlib/rgpio.py" />
+        <option value="$PROJECT_DIR$/dlib/devices/unilojas/c001.py" />
+        <option value="$PROJECT_DIR$/dlib/devices/pextron/urp1439tu.ini" />
+        <option value="$PROJECT_DIR$/dlib/devices/schneider/sepam40.ini" />
+        <option value="$PROJECT_DIR$/dlib/devices/pextron/urpe7104.ini" />
+        <option value="$PROJECT_DIR$/dlib/dconfig.py" />
+        <option value="$PROJECT_DIR$/dweb.ini" />
+        <option value="$PROJECT_DIR$/dweb.py" />
+        <option value="$PROJECT_DIR$/dlib/dslave.py" />
+        <option value="$PROJECT_DIR$/dlib/devices/pextron/urp1439tu.py" />
+        <option value="$PROJECT_DIR$/dlib/devices/schneider/sepam40.py" />
+        <option value="$PROJECT_DIR$/dlib/devices/pextron/urpe7104_v7_18.py" />
       </list>
     </option>
   </component>
@@ -251,7 +191,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-7" />
-    <option name="width" value="1694" />
+    <option name="width" value="1696" />
     <option name="height" value="1017" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -270,6 +210,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -282,28 +224,12 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dweb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dweb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dlib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="WebServerToolWindowFactoryState" value="false" />
   </component>
@@ -317,8 +243,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\demandaweb\software\github\dweb\dlib" />
       <recent name="D:\demandaweb\software\github\dweb" />
+      <recent name="D:\demandaweb\software\github\dweb\dlib" />
       <recent name="D:\demandaweb\software\github\dweb\rlib" />
     </key>
   </component>
@@ -632,28 +558,28 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="0" width="1694" height="1017" extended-state="0" />
+    <frame x="-7" y="0" width="1696" height="1017" extended-state="0" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32918552" sideWeight="0.50244796" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32918552" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39932126" sideWeight="0.50367194" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32918552" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32918552" sideWeight="0.497552" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32918552" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32918552" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16829865" sideWeight="0.4940978" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32918552" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.249694" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39932126" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32918552" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32918552" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17359413" sideWeight="0.4940978" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24938875" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39932126" sideWeight="0.49632803" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20379438" sideWeight="0.5059022" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32918552" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -665,13 +591,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/dweb.py</url>
-          <line>195</line>
-          <option name="timeStamp" value="95" />
-        </line-breakpoint>
-      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -679,118 +598,11 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="97" />
+      <option name="time" value="162" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/rlib/rserial.def.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rlib/rserial.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/logtest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dlib/dcommon.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="37" column="8" lean-forward="false" selection-start-line="37" selection-start-column="8" selection-end-line="37" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rlib/rserial.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="36" column="8" lean-forward="true" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rlib/common.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#44#57#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rlib/rmodbus.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6868">
-          <caret line="412" column="27" lean-forward="false" selection-start-line="412" selection-start-column="27" selection-end-line="412" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rlib/common.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#44#57#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharm2017.1/system/remote_sources/1041041737/201545290/_collections_abc.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="777" column="0" lean-forward="false" selection-start-line="777" selection-start-column="0" selection-end-line="777" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rlib/_rserial.py" />
-    <entry file="file://$USER_HOME$/.PyCharm2017.1/system/remote_sources/1041041737/1405239563/serial/serialjava.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="52" column="19" lean-forward="false" selection-start-line="52" selection-start-column="19" selection-end-line="52" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharm2017.1/system/remote_sources/1041041737/1405239563/serial/serialutil.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="189" column="0" lean-forward="false" selection-start-line="175" selection-start-column="0" selection-end-line="189" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rlib/_rmodbus.py" />
-    <entry file="file://$USER_HOME$/.PyCharm2017.1/system/remote_sources/1041041737/201545290/logging/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="147" column="0" lean-forward="false" selection-start-line="147" selection-start-column="0" selection-end-line="147" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharm2017.1/system/python_stubs/1041041737/_signal.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="74" column="0" lean-forward="false" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rlib/rserial.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rlib/rserial.def.ini">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -847,13 +659,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.PyCharm2017.1/system/remote_sources/1041041737/201545290/pathlib.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="959" column="6" lean-forward="false" selection-start-line="959" selection-start-column="6" selection-end-line="959" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dweb.id">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -891,17 +696,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dlib/dsocket.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/srvtest.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2017.1/system/remote_sources/1041041737/201545290/logging/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="707" column="0" lean-forward="false" selection-start-line="707" selection-start-column="0" selection-end-line="707" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2017.1/system/remote_sources/1041041737/201545290/logging/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="148" column="22" lean-forward="true" selection-start-line="148" selection-start-column="22" selection-end-line="148" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -919,133 +732,277 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dweb.doc.ini" />
-    <entry file="file://$USER_HOME$/.PyCharm2017.1/system/remote_sources/1041041737/201545290/configparser.py">
+    <entry file="file://$USER_HOME$/.PyCharm2017.1/system/remote_sources/1041041737/201545290/posixpath.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="788" column="0" lean-forward="false" selection-start-line="788" selection-start-column="0" selection-end-line="788" selection-end-column="0" />
+        <state relative-caret-position="244">
+          <caret line="151" column="0" lean-forward="false" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rlib/rgpio.py">
+    <entry file="file://$USER_HOME$/.PyCharm2017.1/system/remote_sources/1041041737/201545290/pathlib.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dlib/_dlisten.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="25" lean-forward="false" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rlib/rserial.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="36" column="25" lean-forward="false" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="25" />
+        <state relative-caret-position="167">
+          <caret line="688" column="0" lean-forward="false" selection-start-line="688" selection-start-column="0" selection-end-line="688" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.PyCharm2017.1/system/remote_sources/1041041737/201545290/logging/__init__.py">
+    <entry file="file://$PROJECT_DIR$/dweb.service">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="707" column="0" lean-forward="false" selection-start-line="707" selection-start-column="0" selection-end-line="707" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/rlib/rmodbus.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13294">
-          <caret line="787" column="25" lean-forward="false" selection-start-line="787" selection-start-column="25" selection-end-line="787" selection-end-column="25" />
+        <state relative-caret-position="420">
+          <caret line="787" column="34" lean-forward="false" selection-start-line="787" selection-start-column="34" selection-end-line="787" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rlib/common.py">
+    <entry file="file://$PROJECT_DIR$/rlib/rserial.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9792">
-          <caret line="590" column="6" lean-forward="false" selection-start-line="590" selection-start-column="6" selection-end-line="590" selection-end-column="6" />
-          <folding>
-            <element signature="e#44#57#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dlib/dcommon.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="98" column="0" lean-forward="false" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
+        <state relative-caret-position="454">
+          <caret line="53" column="22" lean-forward="true" selection-start-line="53" selection-start-column="22" selection-end-line="53" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rlib/rdaemon.py">
+    <entry file="file://$PROJECT_DIR$/dlib/devices/pextron/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="55" column="8" lean-forward="false" selection-start-line="55" selection-start-column="8" selection-end-line="55" selection-end-column="8" />
-          <folding />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dlib/dstatus.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="7" column="34" lean-forward="true" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dlib/dstack.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="149" column="37" lean-forward="true" selection-start-line="149" selection-start-column="37" selection-end-line="149" selection-end-column="37" />
+        <state relative-caret-position="-2">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1549031777589" expanded="true" signature="5713:5736" ph="SELECT * FRO... sendstack" />
-            <marker date="1549031777589" expanded="true" signature="6318:6430" ph="INSERT INTO sendstack... " />
-            <marker date="1549031777589" expanded="true" signature="7476:7725" ph="CREATE TABLE... IF" />
-            <marker date="1549031777589" expanded="true" signature="7838:7908" ph="SELECT * FRO... sendstack" />
-            <marker date="1549031777589" expanded="true" signature="8163:8215" ph="DELETE FROM " />
-            <marker date="1549031777589" expanded="true" signature="8468:8498" ph="SELECT COUNT... sendstack" />
-            <marker date="1549031777589" expanded="true" signature="11203:11267" ph="UPDATE sends... " />
+            <marker date="1549203022435" expanded="true" signature="3494:3517" ph="SELECT * FRO... sendstack" />
+            <marker date="1549203022435" expanded="true" signature="4099:4211" ph="INSERT INTO sendstack... " />
+            <marker date="1549203022435" expanded="true" signature="5257:5506" ph="CREATE TABLE... IF" />
+            <marker date="1549203022435" expanded="true" signature="5619:5689" ph="SELECT * FRO... sendstack" />
+            <marker date="1549203022435" expanded="true" signature="5944:5996" ph="DELETE FROM " />
+            <marker date="1549203022435" expanded="true" signature="6249:6279" ph="SELECT COUNT... sendstack" />
+            <marker date="1549203022435" expanded="true" signature="8984:9048" ph="UPDATE sends... " />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dweb.py">
+    <entry file="file://$PROJECT_DIR$/dlib/dsocket.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="74">
-          <caret line="195" column="0" lean-forward="false" selection-start-line="195" selection-start-column="0" selection-end-line="195" selection-end-column="0" />
-          <folding>
-            <element signature="e#44#59#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dweb.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="531">
-          <caret line="188" column="0" lean-forward="false" selection-start-line="188" selection-start-column="0" selection-end-line="188" selection-end-column="0" />
+        <state relative-caret-position="50">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dlib/dalive.py">
+    <entry file="file://$PROJECT_DIR$/dlib/_dlisten.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="471">
-          <caret line="146" column="19" lean-forward="false" selection-start-line="146" selection-start-column="19" selection-end-line="146" selection-end-column="19" />
+        <state relative-caret-position="153">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rlib/rdaemon.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="122">
+          <caret line="228" column="13" lean-forward="false" selection-start-line="228" selection-start-column="13" selection-end-line="228" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dlib/dlisten.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="624">
-          <caret line="170" column="34" lean-forward="false" selection-start-line="170" selection-start-column="34" selection-end-line="170" selection-end-column="34" />
+        <state relative-caret-position="167">
+          <caret line="105" column="0" lean-forward="false" selection-start-line="105" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dlib/dalive.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1317">
+          <caret line="84" column="70" lean-forward="true" selection-start-line="84" selection-start-column="70" selection-end-line="84" selection-end-column="70" />
           <folding>
-            <element signature="e#44#60#0" expanded="true" />
+            <element signature="e#44#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dweb.doc.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="479" column="11" lean-forward="true" selection-start-line="457" selection-start-column="0" selection-end-line="479" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2017.1/system/remote_sources/1041041737/201545290/configparser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="788" column="0" lean-forward="false" selection-start-line="788" selection-start-column="0" selection-end-line="788" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2017.1/system/remote_sources/1041041737/1405239563/RPi/GPIO/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rlib/common.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="112" column="0" lean-forward="false" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
+          <folding>
+            <element signature="e#44#57#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dlib/devices/unilojas/c001.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1599">
+          <caret line="134" column="13" lean-forward="false" selection-start-line="134" selection-start-column="0" selection-end-line="134" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dlib/devices/unilojas/c001.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="600" column="85" lean-forward="true" selection-start-line="600" selection-start-column="12" selection-end-line="600" selection-end-column="85" />
+          <folding>
+            <element signature="e#44#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dlib/devices/schneider/sepam40.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="531">
+          <caret line="107" column="0" lean-forward="false" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dlib/devices/pextron/urpe7104.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rlib/rgpio.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="50" lean-forward="false" selection-start-line="7" selection-start-column="50" selection-end-line="7" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dlib/dcommon.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="161" column="4" lean-forward="false" selection-start-line="161" selection-start-column="4" selection-end-line="161" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dweb.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="531">
+          <caret line="539" column="0" lean-forward="false" selection-start-line="539" selection-start-column="0" selection-end-line="539" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dlib/devices/pextron/urp1439tu.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="107" column="0" lean-forward="true" selection-start-line="102" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dlib/dreport.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="120" column="8" lean-forward="false" selection-start-line="120" selection-start-column="8" selection-end-line="120" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dlib/dslave.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#44#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dlib/dconfig.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="312" column="8" lean-forward="false" selection-start-line="312" selection-start-column="8" selection-end-line="312" selection-end-column="8" />
+          <folding>
+            <element signature="e#44#65#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dlib/devices/schneider/sepam40.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dlib/devices/pextron/urp1439tu.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#44#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dlib/devices/pextron/urpe7104_v7_18.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="301">
+          <caret line="529" column="25" lean-forward="true" selection-start-line="529" selection-start-column="25" selection-end-line="529" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dweb.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="335" column="0" lean-forward="true" selection-start-line="335" selection-start-column="0" selection-end-line="335" selection-end-column="0" />
+          <folding>
+            <element signature="e#44#59#0" expanded="true" />
           </folding>
         </state>
       </provider>

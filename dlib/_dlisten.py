@@ -88,7 +88,7 @@ class DListenProcess(threading.Thread):
         elif self.header.messagetype == dsocket.DSocketMessagesType.CMD:
             self.proc_cmd()
         else:
-            replay_err(self._conn, CONST.DCONST.RETURNCODE_CMD_INVALID)
+            replay_err(self._conn, CONST.RETURNCODE_CMD_INVALID)
 
     def proc_cmd_now(self):
         raise NotImplementedError

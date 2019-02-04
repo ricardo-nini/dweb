@@ -3,17 +3,16 @@
 
 import enum
 import datetime
-import threading
-import configparser
-from rlib.common import CONST, RConfig
+from rlib.common import CONST
 
 CONST.ERROR_LEVEL = 40
-CONST.JOIN_TIMEOUT = 120
+CONST.JOIN_TIMEOUT = 60
 CONST.APPNAME = 'DWeb'
 CONST.MAIN = 'Main'
 CONST.REGISTER = 'Register'
 CONST.INTERVAL = 'Interval'
 CONST.SLAVES = 'Slaves'
+CONST.SLAVE = 'Slave'
 CONST.HOST = 'Host'
 CONST.GPIOTYPE = 'GpioType'
 CONST.LOGCONFIG = 'LogConfig'
@@ -26,12 +25,47 @@ CONST.SOCKETTIMEOUT = 'SocketTimeout'
 CONST.PORT = 'Port'
 CONST.ALIVE = 'Alive'
 CONST.SERVER = 'Server'
+CONST.LOCALSERVER = 'LocalServer'
 CONST.IFACE = 'Iface'
 CONST.BACKUPTIME = 'BackupTime'
 CONST.BACKUPCOUNT = 'BackupCount'
 CONST.DBFILE = 'Dbfile'
 CONST.STACK = 'Stack'
 CONST.IDFILE = 'IdFile'
+CONST.MODELID = 'ModelID'
+CONST.MODBUS_SLAVE = 'Modbus_Slave'
+CONST.LOCAL = 'Local'
+CONST.DESC = 'Desc'
+CONST.PERIODIC = 'Periodic'
+CONST.TOLERANCE = 'Tolerance'
+CONST.TEMP = 'Temp'
+CONST.CURRENT = 'Current'
+CONST.NEUTRO = 'Neutro'
+CONST.VOLT = 'Volt'
+CONST.FACTOR = 'Factor'
+CONST.FREQUENCY = 'Frequency'
+CONST.AD = 'AD'
+CONST.GPI_AC = 'GPI_AC'
+CONST.REPORT = 'Report'
+CONST.ALARM = 'Alarm'
+CONST.EVENT = 'Event'
+CONST.PRIORITY = 'Priority'
+CONST.GPIOTYPE = 'GpioType'
+CONST.PINBATTERY = 'PinBattery'
+CONST.PINRESETGSM = 'PinResetGSM'
+CONST.RESETGSMTIME = 'ResetGSMTime'
+CONST.DISCONNECT_TIME = 'Disconnect_Time'
+CONST.PINRESETATMEGA = 'PinResetAtmega'
+CONST.PINLOCK = 'PinLock'
+CONST.PINLOCKLED = 'PinLockLed'
+CONST.I2C_ATMEGA = 'I2C_Atmega'
+CONST.I2C_ATMEGA_ADDR = 'I2C_Atmega_Address'
+CONST.I2C_DISPLAY = 'I2C_Display'
+CONST.I2C_DISPLAY_ADDR = 'I2C_Display_Address'
+CONST.BATTERYMONITOR = 'BatteryMonitor'
+CONST.LOCKENABLE = 'LockEnable'
+CONST.CODI = 'Codi'
+CONST.WATCHDOG_TIME = 'WatchDog_Time'
 
 # constants for use in state bit mask
 CONST.STATE_LOCK = 7  # 32768 (Bloqueio local, em manutenção)
@@ -70,7 +104,11 @@ CONST.RETURNCODE_MODBUS_NOT_USEFUL = 2009
 CONST.RETURNCODE_MODBUS_MESSAGE = 2010
 CONST.RETURNCODE_UNKNOWN = 0xffff  # Erro desconhecido
 
-CONFIG = RConfig(interpolation=configparser.ExtendedInterpolation())
+# Lista de dispositivos por modelid que sao devices
+DEVICES_CATALOG = (
+    0,  # padrao
+    3,  # unilojas_c001
+)
 
 
 # =============================================================================#
@@ -86,15 +124,33 @@ class DWebGlobal(object):
         self.modbus = {}
         self.boot = boot
         self.setup = setup
+        self._path = str()
+        self._args = ()
         self._reset = DResetTypes.NO_RESET
 
     @property
-    def reset(self):
+    def reset(self) -> DResetTypes:
         return self._reset
 
     @reset.setter
     def reset(self, value: DResetTypes):
         self._reset = value
+
+    @property
+    def path(self) -> str:
+        return self._path
+
+    @path.setter
+    def path(self, value: str):
+        self._path = value
+
+    @property
+    def args(self):
+        return self._args
+
+    @args.setter
+    def args(self, value):
+        self._args = value
 
 
 # =============================================================================#

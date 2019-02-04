@@ -7,69 +7,16 @@ import struct
 import threading
 import traceback
 import time
-from rlib.common import RConfigError, RConfigParms, RByteType as BTYPE, RData, int2ip, get_ip_from_iface
-from dlib.dcommon import CONFIG, GLOBAL, CONST
+from rlib.common import RByteType as BTYPE, RData, int2ip, get_ip_from_iface, CONST
+from dlib.dconfig import CONFIG
 from dlib.dstatus import STATUS
-
-
-# =============================================================================#
-class DAliveConfig(RConfigParms):
-    @property
-    def host(self) -> str:
-        if self._config.conf.has_option(self._section, CONST.HOST):
-            return self._config.conf.get(self._section, CONST.HOST)
-        elif len(self._main_section) != 0 and self._config.conf.has_option(self._main_section, CONST.HOST):
-            return self._config.conf.get(self._main_section, CONST.HOST)
-        else:
-            raise RConfigError(CONST.HOST)
-
-    @host.setter
-    def host(self, value):
-        self._config.conf.set(self._section, CONST.PORT, value)
-
-    @property
-    def port(self) -> int:
-        return self._config.conf.getint(self._section, CONST.PORT, fallback=9093)
-
-    @port.setter
-    def port(self, value):
-        self._config.conf.set(self._section, CONST.PORT, value)
-
-    @property
-    def iface(self) -> str:
-        if self._config.conf.has_option(self._section, CONST.IFACE):
-            return self._config.conf.get(self._section, CONST.IFACE)
-        elif len(self._main_section) != 0 and self._config.conf.has_option(self._main_section, CONST.IFACE):
-            return self._config.conf.get(self._main_section, CONST.IFACE)
-        else:
-            raise RConfigError(CONST.IFACE)
-
-    @iface.setter
-    def iface(self, value):
-        self._config.conf.set(self._section, CONST.IFACE, value)
-
-    @property
-    def timeout(self) -> int:
-        return self._config.conf.getint(self._section, CONST.TIMEOUT, fallback=30)
-
-    @timeout.setter
-    def timeout(self, value):
-        self._config.conf.set(self._section, CONST.TIMEOUT, value)
-
-    @property
-    def interval(self) -> int:
-        return self._config.conf.getint(self._section, CONST.INTERVAL, fallback=900)
-
-    @interval.setter
-    def interval(self, value):
-        self._config.conf.set(self._section, CONST.INTERVAL, value)
 
 
 # =============================================================================#
 class DAlive(threading.Thread):
     def __init__(self):
         super().__init__()
-        self._config = DAliveConfig(CONST.ALIVE, CONFIG, CONST.MAIN)
+        self._config = CONFIG.alive
         self._timeout = self._config.timeout
         self._host = self._config.host
         self._port = self._config.port

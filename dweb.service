@@ -1,0 +1,11 @@
+[Unit]
+Description=Forking dweb program
+
+[Service]
+Type=forking
+#PIDFile=/var/run/dweb.pid
+ExecStart=/usr/bin/dweb/dweb --start
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target

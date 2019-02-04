@@ -5,51 +5,12 @@ import threading
 import logging
 import socket
 import time
-from rlib.common import RData, get_ip_from_iface, RConfigParms, RConfigError
+from rlib.common import RData, get_ip_from_iface
 import dlib.dsocket as dsocket
-from dlib.dcommon import CONST, CONFIG
+from dlib.dcommon import CONST, DEVICES_CATALOG
 from dlib.dstatus import STATUS
+from dlib.dconfig import DConfig_Listen, CONFIG
 import dlib._dlisten as listen_function
-
-
-# =============================================================================#
-class DListenConfig(RConfigParms):
-    @property
-    def iface(self) -> str:
-        if self._config.conf.has_option(self._section, CONST.IFACE):
-            return self._config.conf.get(self._section, CONST.IFACE)
-        elif len(self._main_section) != 0 and self._config.conf.has_option(self._main_section, CONST.IFACE):
-            return self._config.conf.get(self._main_section, CONST.IFACE)
-        else:
-            raise RConfigError(CONST.IFACE)
-
-    @iface.setter
-    def iface(self, value):
-        self._config.conf.set(self._section, CONST.IFACE, value)
-
-    @property
-    def port(self) -> int:
-        return self._config.conf.getint(self._section, CONST.PORT, fallback=9094)
-
-    @port.setter
-    def port(self, value):
-        self._config.conf.set(self._section, CONST.PORT, value)
-
-    @property
-    def timeout(self) -> int:
-        return self._config.conf.getint(self._section, CONST.TIMEOUT, fallback=60)
-
-    @timeout.setter
-    def timeout(self, value):
-        self._config.conf.set(self._section, CONST.TIMEOUT, value)
-
-    @property
-    def sockettimeout(self) -> int:
-        return self._config.conf.getint(self._section, CONST.SOCKETTIMEOUT, fallback=60)
-
-    @sockettimeout.setter
-    def sockettimeout(self, value):
-        self._config.conf.set(self._section, CONST.SOCKETTIMEOUT, value)
 
 
 # =============================================================================#
@@ -78,7 +39,7 @@ class DListen_Process(threading.Thread):
                 # determina o modelid e cria classe correspondente
                 # para acrescentar dispositivos novos adicione a lista abaixo
                 if recv_header.slave == 0 and recv_header.modelid in DEVICES_CATALOG:  # slave:0
-                    if DWEB_CONFIG.slaves[0].modelid == 3:  # device modelid: 3
+                    if CONFIG.slaves[0].modelid == 3:  # device modelid: 3
                         import dlib.devices.unilojas.c001 as unilojas_c001
                         unilojas_c001.DUnilojas_C001_Process(self._conn, self._addr, recv_header, recv_data,
                                                              self._resources).start()
@@ -129,10 +90,10 @@ class DListen_Process(threading.Thread):
 
 # =============================================================================#
 class DListen(threading.Thread):
-    def __init__(self, resources: dict):
+    def __init__(self, resources: dict, config_listen: DConfig_Listen):
         threading.Thread.__init__(self)
         self._resources = resources
-        self._config = DListenConfig(CONST.ALIVE, CONFIG, CONST.MAIN)
+        self._config = config_listen
         self._iface = self._config.iface
         self._timeout = self._config.timeout
         self._port = self._config.port
@@ -158,11 +119,7 @@ class DListen(threading.Thread):
                 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as self.__s:
                     self.__s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
                     self.__s.settimeout(self._timeout)
-                    try:
-                        self.__s.bind((host, self._port))
-                    except Exception as err:
-                        self.logger.debug('{} Bind erro: {}'.format(self.get_listen_name(), str(err)))
-                        continue
+                    self.__s.bind((host, self._port))
                     self.__s.listen(1)
                     while self.is_running():
                         try:

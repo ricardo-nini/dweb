@@ -8,73 +8,10 @@ import socket
 import time
 import dlib.dsocket as dsocket
 import logging
-from rlib.common import RData, RConfigParms, RConfigError
-from dlib.dcommon import CONFIG, GLOBAL, DResetTypes, CONST
+from rlib.common import RData
+from dlib.dcommon import GLOBAL, DResetTypes, CONST
+from dlib.dconfig import CONFIG
 from dlib.dstatus import STATUS
-
-
-# =============================================================================#
-class DSendStackConfig(RConfigParms):
-    @property
-    def host(self) -> str:
-        if self._config.conf.has_option(self._section, CONST.HOST):
-            return self._config.conf.get(self._section, CONST.HOST)
-        elif len(self._main_section) != 0 and self._config.conf.has_option(self._main_section, CONST.HOST):
-            return self._config.conf.get(self._main_section, CONST.HOST)
-        else:
-            raise RConfigError(CONST.HOST)
-
-    @host.setter
-    def host(self, value):
-        self._config.conf.set(self._section, CONST.PORT, value)
-
-    @property
-    def port(self) -> int:
-        return self._config.conf.getint(self._section, CONST.PORT, fallback=9091)
-
-    @port.setter
-    def port(self, value):
-        self._config.conf.set(self._section, CONST.PORT, value)
-
-    @property
-    def timeout(self) -> int:
-        return self._config.conf.getint(self._section, CONST.TIMEOUT, fallback=30)
-
-    @timeout.setter
-    def timeout(self, value):
-        self._config.conf.set(self._section, CONST.TIMEOUT, value)
-
-    @property
-    def interval(self) -> int:
-        return self._config.conf.getint(self._section, CONST.INTERVAL, fallback=1000)
-
-    @interval.setter
-    def interval(self, value):
-        self._config.conf.set(self._section, CONST.INTERVAL, value)
-
-    @property
-    def backuptime(self) -> int:
-        return self._config.conf.getint(self._section, CONST.BACKUPTIME, fallback=60)
-
-    @backuptime.setter
-    def backuptime(self, value):
-        self._config.conf.set(self._section, CONST.BACKUPTIME, value)
-
-    @property
-    def backupcount(self) -> int:
-        return self._config.conf.getint(self._section, CONST.BACKUPCOUNT, fallback=10)
-
-    @backupcount.setter
-    def backupcount(self, value):
-        self._config.conf.set(self._section, CONST.BACKUPCOUNT, value)
-
-    @property
-    def dbfile(self) -> str:
-        return self._config.conf.get(self._section, CONST.DBFILE, fallback='stack.db')
-
-    @dbfile.setter
-    def dbfile(self, value):
-        self._config.conf.set(self._section, CONST.DBFILE, value)
 
 
 # =============================================================================#
@@ -83,7 +20,7 @@ class DSendStack(threading.Thread):
 
     def __init__(self):
         super().__init__()
-        self._config = DSendStackConfig(CONST.STACK, CONFIG, CONST.MAIN)
+        self._config = CONFIG.stack
         self._dbfile = self._config.dbfile
         self._host = self._config.host
         self._port = self._config.port
@@ -110,11 +47,11 @@ class DSendStack(threading.Thread):
                 while self.is_running():
                     if self._count != 0:
                         if not STATUS.is_state(
-                                CONST.DCONST.STATE_BACKUP) and self._count > self._backupcount:
-                            STATUS.set_state(CONST.DCONST.STATE_BACKUP)
+                                CONST.STATE_BACKUP) and self._count > self._backupcount:
+                            STATUS.set_state(CONST.STATE_BACKUP)
                         elif STATUS.is_state(
-                                CONST.DCONST.STATE_BACKUP) and self._count <= self._backupcount:
-                            STATUS.clear_state(CONST.DCONST.STATE_BACKUP)
+                                CONST.STATE_BACKUP) and self._count <= self._backupcount:
+                            STATUS.clear_state(CONST.STATE_BACKUP)
                         d = self._pull_db()
                         if d:
                             f, r = self._send(d)

@@ -7,96 +7,28 @@ import threading
 import time
 import os
 import sys
-import logging
 import subprocess
 import traceback
-import logging.config
+import logging
 import rlib.rdaemon as rdaemon
 import rlib.rgpio as GPIO
 import rlib.rmodbus as rmodbus
 import dlib.dalive as dalive
 import dlib.dstack as dstack
 import dlib.dlisten as dlisten
-from rlib.common import CONST, RConfigError, RConfigParms
-from dlib.dcommon import DResetTypes, CONFIG, GLOBAL
+from rlib.common import CONST, RData
+from dlib.dcommon import DResetTypes, GLOBAL
 from dlib.dstatus import STATUS
+from dlib.dconfig import RConfig, CONFIG, DConfig_Slave
+import dlib.dsocket as dsocket
+
+# add import devices here
+import dlib.devices.unilojas.c001 as unilojas_c001
+import dlib.devices.pextron.urp1439tu as pextron_urp1439tu
+import dlib.devices.pextron.urpe7104_v7_18 as pextron_urpe7104_v7_18
+import dlib.devices.schneider.sepam40 as schneider_sepam40
 
 __version__ = '1.0.0'
-
-
-# =============================================================================#
-class DWebConfig(RConfigParms):
-    @property
-    def version(self) -> str:
-        return self._config.conf.get(self._section, CONST.VERSION)
-
-    @version.setter
-    def version(self, value):
-        self._config.conf.set(self._section, CONST.VERSION, value)
-
-    @property
-    def register(self) -> bool:
-        return self._config.conf.getboolean(self._section, CONST.REGISTER, fallback=False)
-
-    @register.setter
-    def register(self, value):
-        self._config.conf.set(self._section, CONST.REGISTER, value)
-
-    @property
-    def interval(self) -> int:
-        return self._config.conf.getint(self._section, CONST.INTERVAL, fallback=1)
-
-    @interval.setter
-    def interval(self, value):
-        self._config.conf.set(self._section, CONST.INTERVAL, value)
-
-    @property
-    def slaves(self) -> int:
-        return self._config.conf.getint(self._section, CONST.SLAVES)
-
-    @slaves.setter
-    def slaves(self, value):
-        self._config.conf.set(self._section, CONST.SLAVES, value)
-
-    @property
-    def host(self) -> str:
-        return self._config.conf.get(self._section, CONST.HOST)
-
-    @host.setter
-    def host(self, value):
-        self._config.conf.set(self._section, CONST.HOST, value)
-
-    @property
-    def gpiotype(self) -> int:
-        return self._config.conf.getint(self._section, CONST.GPIOTYPE, fallback=12)
-
-    @gpiotype.setter
-    def gpiotype(self, value):
-        self._config.conf.set(self._section, CONST.GPIOTYPE, value)
-
-    @property
-    def logconfig(self) -> str:
-        return self._config.conf.get(self._section, CONST.LOGCONFIG)
-
-    @logconfig.setter
-    def logconfig(self, value):
-        self._config.conf.set(self._section, CONST.LOGCONFIG, value)
-
-    @property
-    def idfile(self) -> str:
-        return self._config.conf.get(self._section, CONST.IDFILE)
-
-    @idfile.setter
-    def idfile(self, value):
-        self._config.conf.set(self._section, CONST.IDFILE, value)
-
-    @property
-    def pidfile(self) -> str:
-        return self._config.conf.get(self._section, CONST.PIDFILE)
-
-    @pidfile.setter
-    def pidfile(self, value):
-        self._config.conf.set(self._section, CONST.PIDFILE, value)
 
 
 # =============================================================================#
@@ -110,18 +42,18 @@ class DModbusComm(rmodbus.RModbusComm):
     def exchange(self, send: rmodbus.RModbusMessage) -> rmodbus.RModbusMessage:
         DModbusComm.threadLock.acquire()
         try:
-            if STATUS.is_state(CONST.DCONST.STATE_MODBUS) and all(x == False for x in GLOBAL.modbus.values()):
+            if STATUS.is_state(CONST.STATE_MODBUS) and all(x == False for x in GLOBAL.modbus.values()):
                 self.logger.debug('Tentei abrir')
                 if self.is_open():
                     self.close()
                 self.open()
             r = super().exchange(send)
-            if STATUS.is_state(CONST.DCONST.STATE_MODBUS) and all(x == True for x in GLOBAL.modbus.values()):
-                STATUS.toggle_state(CONST.DCONST.STATE_MODBUS)
+            if STATUS.is_state(CONST.STATE_MODBUS) and all(x == True for x in GLOBAL.modbus.values()):
+                STATUS.toggle_state(CONST.STATE_MODBUS)
             return r
         except Exception as err:
-            if not STATUS.is_state(CONST.DCONST.STATE_MODBUS) and STATUS.is_state(CONST.DCONST.STATE_REGISTER):
-                STATUS.toggle_state(CONST.DCONST.STATE_MODBUS)
+            if not STATUS.is_state(CONST.STATE_MODBUS) and STATUS.is_state(CONST.STATE_REGISTER):
+                STATUS.toggle_state(CONST.STATE_MODBUS)
             self.logger.debug('Erro no modbus: {}'.format(err))
             raise
         finally:
@@ -138,33 +70,40 @@ class DWeb(rdaemon.Daemonize):
         super().__init__(app, pid, privileged_action, user, group, verbose, logger,
                          foreground, chdir)
         self.resources = {}
-        self.config = DWebConfig(CONST.MAIN, CONFIG)
         self.logger = logging.getLogger(__name__)
+        self._jobs_started = False
+        self._jobs = {}
         self._stop_event = threading.Event()
 
     def run(self, *args):
+        # get time boot
+        time_boot = int(time.time())
+
         # create global control object
         GLOBAL.boot = True
         GLOBAL.reset = DResetTypes.NO_RESET
 
         try:
-            self.logger.info('Iniciando DWeb -> {}'.format(self.config.str()))
+            self.logger.info('Iniciando DWeb -> {}'.format(CONFIG.main.str()))
+
+            # load slaves
+            self.load_slaves()
 
             # init status object
             STATUS.clear()
 
             # le arquivo .id
-            STATUS.read_id_from_file(str(Path(CONFIG.p0.parents[0], self.config.idfile)))
+            STATUS.read_id_from_file(str(Path(CONFIG.rconfig.path_config.parents[0], CONFIG.main.idfile)))
 
             # set register state
-            if self.config.register:
+            if CONFIG.main.register:
                 STATUS.set_state(CONST.STATE_REGISTER)
             else:
                 STATUS.clear_state(CONST.STATE_REGISTER)
 
             # init GPIOs (trigger exception if config error)
             GPIO.setwarnings(False)
-            GPIO.setmode(self.config.gpiotype)
+            GPIO.setmode(CONFIG.main.gpiotype)
 
             # inicia alive thread
             self.alive = dalive.DAlive()
@@ -188,13 +127,43 @@ class DWeb(rdaemon.Daemonize):
             self.resources['stack'] = self.stack
 
             # inicia server
-            self.server = dlisten.DListen(self.resources)
+            self.server = dlisten.DListen(self.resources, CONFIG.listen)
             self.resources['server'] = self.server
             self.server.start()
 
+            # inicia local server (se configurado)
+            if CONFIG.is_local_server():
+                self.local_server = dlisten.DListen(self.resources, CONFIG.local_listen)
+                self.resources['server'] = self.local_server
+                self.local_server.start()
+            else:
+                self.local_server = None
+
+            # inicia codi
+
+
+
             # main loop
             while self.is_running():
-                self.wait_time(20)
+
+                # only do if registered
+                if STATUS.is_state(CONST.STATE_REGISTER):
+                    # send boot if true
+                    if GLOBAL.boot:
+                        self.send_boot(time_boot)
+                        GLOBAL.boot = False
+                    # create jobs at first time ...
+                    if not self._jobs_started:
+                        self.start_jobs()
+                    # if setup changed, send message setup
+                    if GLOBAL.setup:
+                        self.send_setup(int(time.time()))
+                        GLOBAL.setup = False
+                else:
+                    # stop jobs if exist
+                    self.stop_jobs()
+
+                self.wait_time(60)
                 break
                 # interval wait
 
@@ -202,6 +171,9 @@ class DWeb(rdaemon.Daemonize):
             self.soft_reset = GLOBAL.reset == DResetTypes.SOFT_RESET
 
             self.logger.info('Terminando com reset:{}'.format(GLOBAL.reset))
+
+            # stop jobs if exist
+            self.stop_jobs()
 
             # stop threads and wait ...
             self.stop_services()
@@ -222,6 +194,29 @@ class DWeb(rdaemon.Daemonize):
                 for line in traceback.format_exc().split("\n"):
                     self.logger.error(line)
 
+    def sigterm(self, signum, frame):
+        self.logger.info('Recebido signal {}.'.format(signum))
+        self.stop_main()
+
+    def exit(self):
+        super().exit()
+
+    def load_slaves(self):
+        # fill slaves
+        for x in range(0, CONFIG.main.slaves + 1):
+            s = DConfig_Slave(CONFIG.rconfig, x)
+            if s.modelid == pextron_urp1439tu.ID['modelid']:
+                rs = pextron_urp1439tu.DPextron_URP1439TU_Config(CONFIG.rconfig, x)
+            elif s.modelid == schneider_sepam40.ID['modelid']:
+                rs = schneider_sepam40.DSchneider_SEPAM40_Config(CONFIG.rconfig, x)
+            elif s.modelid == unilojas_c001.ID['modelid']:
+                rs = unilojas_c001.DUnilojas_C001_Config(CONFIG.rconfig, x)
+            elif s.modelid == pextron_urpe7104_v7_18.ID['modelid']:
+                rs = pextron_urpe7104_v7_18.DPextron_URPE7104_V7_18_Config(CONFIG.rconfig, x)
+            else:
+                raise ValueError('{} {}'.format(CONST.ERR_INVALID, CONST.MODELID))
+            CONFIG.slaves[x] = rs
+
     def is_running(self) -> bool:
         return not self._stop_event.is_set()
 
@@ -232,19 +227,58 @@ class DWeb(rdaemon.Daemonize):
         self._stop_event.set()
 
     def stop_services(self):
+        if self.local_server:
+            self.local_server.stop()
         self.server.stop()
         self.stack.stop()
         self.alive.stop()
+        if self.local_server:
+            self.local_server.join(CONST.JOIN_TIMEOUT)
         self.server.join(CONST.JOIN_TIMEOUT)
         self.stack.join(CONST.JOIN_TIMEOUT)
         self.alive.join(CONST.JOIN_TIMEOUT)
 
-    def sigterm(self, signum, frame):
-        self.logger.info('Recebido signal {}.'.format(signum))
-        self.stop_main()
+    def start_jobs(self):
+        for x in range(0, CONFIG.main.slaves + 1):
+            modelid = CONFIG.slaves[x].modelid
+            if modelid is not None:
+                try:
+                    if modelid == pextron_urp1439tu.ID['modelid']:
+                        self._jobs[x] = pextron_urp1439tu.DPextron_URP1439TU_Thread(x, self.resources)
+                        self._jobs[x].start()
+                    elif modelid == schneider_sepam40.ID['modelid']:
+                        self._jobs[x] = schneider_sepam40.DSchneider_SEPAM40_Thread(x, self.resources)
+                        self._jobs[x].start()
+                    elif modelid == unilojas_c001.ID['modelid']:
+                        self._jobs[x] = unilojas_c001.DUnilojas_C001_Thread(x, self.resources)
+                        self._jobs[x].start()
+                    elif modelid == pextron_urpe7104_v7_18.ID['modelid']:
+                        self._jobs[x] = pextron_urpe7104_v7_18.DPextron_URPE7104_V7_18_Thread(x, self.resources)
+                        self._jobs[x].start()
+                except Exception as err:
+                    self.logger.info('Erro "{}" iniciando job "{}"'.format(str(err), CONFIG.slaves[x].local))
+        self._jobs_started = True
 
-    def exit(self):
-        super().exit()
+    def stop_jobs(self):
+        if len(self._jobs) != 0:
+            for x in self._jobs.values():
+                x.stop()
+            for x in self._jobs.values():
+                x.join()
+            self._jobs.clear()
+        self._jobs_started = False
+
+    def send_boot(self, time_boot: int):
+        h = dsocket.DSocketHeader_Boot.create(STATUS.id, time_boot)
+        self.stack.put(0, time.time(), h)
+
+    def send_setup(self, time_setup: int):
+        h = dsocket.DSocketHeader_Setup.create(STATUS.id, time_setup)
+        try:
+            r = RData.read_from_file(CONST.APPNAME + '.ini')
+            self.stack.put(0, time.time(), h, r)
+        except Exception as err:
+            self.logger.debug('Erro lendo configuracao {}'.format(str(err)))
 
     def activate_modbus(self):
         try:
@@ -274,40 +308,28 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # get path
-    path = os.path.dirname(os.path.abspath(sys.argv[0]))
+    GLOBAL.path = os.path.dirname(os.path.abspath(sys.argv[0]))
 
-    # load config
-    if len(args.config) != 0:
-        p = Path(args.config)
-        if p.is_file():
-            if len(p.parents) > 0:
-                path = str(p.parents[0])
-            else:
-                path = str()
-            CONFIG.read(p.name, path)
-        else:
-            raise FileNotFoundError('file:{}'.format(args.config))
-    else:
-        CONFIG.read('{}.ini'.format(CONST.APPNAME).lower(), (path, '/etc/dweb'))
+    # take args to GLOBAL
+    GLOBAL.args = args
+
+    # create and load config
+    rconfig = RConfig()
+    CONFIG.load(rconfig, GLOBAL.path, GLOBAL.args)
 
     # load logger
-    if CONFIG.conf.has_option(CONST.MAIN, CONST.LOGCONFIG):
-        logfile = str(Path(CONFIG._p0.parents[0], CONFIG.conf.get(CONST.MAIN, CONST.LOGCONFIG)))
-        logging.config.fileConfig(logfile, disable_existing_loggers=False)
+    CONFIG.load_logger()
 
-    # get pidfile
-    if CONFIG.conf.has_option(CONST.MAIN, CONST.PIDFILE):
-        pidfile = CONFIG.conf.get(CONST.MAIN, CONST.PIDFILE)
-    else:
-        raise RConfigError(CONST.PIDFILE)
+    # get pidfile (rais RConfigError)
+    pidfile = CONFIG.config.get(CONST.MAIN, CONST.PIDFILE)
 
     # start dweb class
     if args.debug:
-        d = DWeb(app='dweb', pid=pidfile, foreground=True, chdir=path)
+        d = DWeb(app='dweb', pid=pidfile, foreground=True, chdir=GLOBAL.path)
         d.start()
     elif args.start:
-        d = DWeb(app='dweb', pid=pidfile, foreground=False, chdir=path)
+        d = DWeb(app='dweb', pid=pidfile, foreground=False, chdir=GLOBAL.path)
         getattr(d, 'start')()
     else:
-        d = DWeb(app='dweb', pid=pidfile, foreground=False, chdir=path)
+        d = DWeb(app='dweb', pid=pidfile, foreground=False, chdir=GLOBAL.path)
         getattr(d, 'stop')()
