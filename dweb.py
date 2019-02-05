@@ -10,17 +10,19 @@ import sys
 import subprocess
 import traceback
 import logging
+import logging.config
 import rlib.rdaemon as rdaemon
 import rlib.rgpio as GPIO
 import rlib.rmodbus as rmodbus
+from rlib.common import CONST, RData
+from dlib.dcommon import DResetTypes, GLOBAL
+import dlib.dsocket as dsocket
 import dlib.dalive as dalive
 import dlib.dstack as dstack
 import dlib.dlisten as dlisten
-from rlib.common import CONST, RData
-from dlib.dcommon import DResetTypes, GLOBAL
 from dlib.dstatus import STATUS
-from dlib.dconfig import RConfig, CONFIG, DConfig_Slave
-import dlib.dsocket as dsocket
+import dlib.dconfig as dconfig
+from dlib.dconfig import CONFIG, RConfig
 
 # add import devices here
 import dlib.devices.unilojas.c001 as unilojas_c001
@@ -84,6 +86,9 @@ class DWeb(rdaemon.Daemonize):
         GLOBAL.reset = DResetTypes.NO_RESET
 
         try:
+            # load config data
+            CONFIG.load(rconfig)
+
             self.logger.info('Iniciando DWeb -> {}'.format(CONFIG.main.str()))
 
             # load slaves
@@ -111,9 +116,9 @@ class DWeb(rdaemon.Daemonize):
             self.alive.start()
 
             # inicia modbus
-            config_modbus = rmodbus.RModbusConfig('Modbus', CONFIG)
+            config_modbus = rmodbus.RModbusConfig('Modbus', CONFIG.rconfig)
             modbus_parms = config_modbus.read()
-            self.logger.info(config_modbus.str())
+            self.logger.info('Modbus:{}'.format(config_modbus.str()))
             self.modbus = DModbusComm(modbus_parms)
             self.activate_modbus()
 
@@ -127,13 +132,13 @@ class DWeb(rdaemon.Daemonize):
             self.resources['stack'] = self.stack
 
             # inicia server
-            self.server = dlisten.DListen(self.resources, CONFIG.listen)
+            self.server = dlisten.DListen(self.resources, CONST.SERVER)
             self.resources['server'] = self.server
             self.server.start()
 
             # inicia local server (se configurado)
-            if CONFIG.is_local_server():
-                self.local_server = dlisten.DListen(self.resources, CONFIG.local_listen)
+            if CONFIG.config.has_section(CONST.LOCALSERVER):
+                self.local_server = dlisten.DListen(self.resources, CONST.LOCALSERVER)
                 self.resources['server'] = self.local_server
                 self.local_server.start()
             else:
@@ -204,15 +209,15 @@ class DWeb(rdaemon.Daemonize):
     def load_slaves(self):
         # fill slaves
         for x in range(0, CONFIG.main.slaves + 1):
-            s = DConfig_Slave(CONFIG.rconfig, x)
+            s = dconfig.DConfig_Slave(CONFIG, x)
             if s.modelid == pextron_urp1439tu.ID['modelid']:
-                rs = pextron_urp1439tu.DPextron_URP1439TU_Config(CONFIG.rconfig, x)
+                rs = dconfig.DConfig_Slave_Pextron_URP1439TU(CONFIG, x)
             elif s.modelid == schneider_sepam40.ID['modelid']:
-                rs = schneider_sepam40.DSchneider_SEPAM40_Config(CONFIG.rconfig, x)
+                rs = dconfig.DConfig_Slave_Schneider_SEPAM40(CONFIG, x)
             elif s.modelid == unilojas_c001.ID['modelid']:
-                rs = unilojas_c001.DUnilojas_C001_Config(CONFIG.rconfig, x)
+                rs = dconfig.DConfig_Slave_Unilojas_C001(CONFIG, x)
             elif s.modelid == pextron_urpe7104_v7_18.ID['modelid']:
-                rs = pextron_urpe7104_v7_18.DPextron_URPE7104_V7_18_Config(CONFIG.rconfig, x)
+                rs = dconfig.DConfig_Slave_Pextron_URPE7104_v7_18(CONFIG, x)
             else:
                 raise ValueError('{} {}'.format(CONST.ERR_INVALID, CONST.MODELID))
             CONFIG.slaves[x] = rs
@@ -244,16 +249,16 @@ class DWeb(rdaemon.Daemonize):
             if modelid is not None:
                 try:
                     if modelid == pextron_urp1439tu.ID['modelid']:
-                        self._jobs[x] = pextron_urp1439tu.DPextron_URP1439TU_Thread(x, self.resources)
+                        self._jobs[x] = pextron_urp1439tu.Device_Job(x, self.resources)
                         self._jobs[x].start()
                     elif modelid == schneider_sepam40.ID['modelid']:
-                        self._jobs[x] = schneider_sepam40.DSchneider_SEPAM40_Thread(x, self.resources)
+                        self._jobs[x] = schneider_sepam40.Device_Job(x, self.resources)
                         self._jobs[x].start()
                     elif modelid == unilojas_c001.ID['modelid']:
-                        self._jobs[x] = unilojas_c001.DUnilojas_C001_Thread(x, self.resources)
+                        self._jobs[x] = unilojas_c001.Device_Job(x, self.resources)
                         self._jobs[x].start()
                     elif modelid == pextron_urpe7104_v7_18.ID['modelid']:
-                        self._jobs[x] = pextron_urpe7104_v7_18.DPextron_URPE7104_V7_18_Thread(x, self.resources)
+                        self._jobs[x] = pextron_urpe7104_v7_18.Device_Job(x, self.resources)
                         self._jobs[x].start()
                 except Exception as err:
                     self.logger.info('Erro "{}" iniciando job "{}"'.format(str(err), CONFIG.slaves[x].local))
@@ -313,15 +318,28 @@ if __name__ == '__main__':
     # take args to GLOBAL
     GLOBAL.args = args
 
-    # create and load config
+    # load config
     rconfig = RConfig()
-    CONFIG.load(rconfig, GLOBAL.path, GLOBAL.args)
+    if len(args.config) != 0:
+        p = Path(args.config)
+        if p.is_file():
+            if len(p.parents) > 0:
+                path = str(p.parents[0])
+            else:
+                path = str()
+            rconfig.read(p.name, path)
+        else:
+            raise FileNotFoundError('file:{}'.format(args.config))
+    else:
+        rconfig.read('{}.ini'.format(CONST.APPNAME).lower(), (GLOBAL.path, '/etc/dweb'))
 
     # load logger
-    CONFIG.load_logger()
+    if rconfig.config.has_option(CONST.MAIN, CONST.LOGCONFIG):
+        logfile = str(Path(rconfig.path_config.parents[0], rconfig.config.get(CONST.MAIN, CONST.LOGCONFIG)))
+        logging.config.fileConfig(logfile, disable_existing_loggers=False)
 
     # get pidfile (rais RConfigError)
-    pidfile = CONFIG.config.get(CONST.MAIN, CONST.PIDFILE)
+    pidfile = rconfig.config.get(CONST.MAIN, CONST.PIDFILE)
 
     # start dweb class
     if args.debug:

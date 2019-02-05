@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-import logging.config
-from pathlib import Path
 import rlib.common as common
 from rlib.common import RConfigParms, RConfig, RConfigError, CONST
 
@@ -89,54 +87,6 @@ class DConfig_Main(RConfigParms):
 
 
 # =============================================================================#
-class DConfig_Listen(RConfigParms):
-    def __init__(self, rconfig: RConfig, server_section):
-        self._server_section = server_section
-        super().__init__(server_section, rconfig, CONST.MAIN)
-
-    @property
-    def server_section(self):
-        return self._server_section
-
-    @property
-    def iface(self) -> str:
-        if self.config.has_option(self._section, CONST.IFACE):
-            return self.config.get(self._section, CONST.IFACE)
-        elif len(self._main_section) != 0 and self.config.has_option(self._main_section, CONST.IFACE):
-            return self.config.get(self._main_section, CONST.IFACE)
-        else:
-            raise RConfigError(CONST.IFACE)
-
-    @iface.setter
-    def iface(self, value):
-        self.config.set(self._section, CONST.IFACE, value)
-
-    @property
-    def port(self) -> int:
-        return self.config.getint(self._section, CONST.PORT, fallback=9094)
-
-    @port.setter
-    def port(self, value):
-        self.config.set(self._section, CONST.PORT, value)
-
-    @property
-    def timeout(self) -> int:
-        return self.config.getint(self._section, CONST.TIMEOUT, fallback=60)
-
-    @timeout.setter
-    def timeout(self, value):
-        self.config.set(self._section, CONST.TIMEOUT, value)
-
-    @property
-    def sockettimeout(self) -> int:
-        return self.config.getint(self._section, CONST.SOCKETTIMEOUT, fallback=60)
-
-    @sockettimeout.setter
-    def sockettimeout(self, value):
-        self.config.set(self._section, CONST.SOCKETTIMEOUT, value)
-
-
-# =============================================================================#
 class DConfig_Alive(RConfigParms):
     def __init__(self, rconfig: RConfig):
         super().__init__(CONST.ALIVE, rconfig, CONST.MAIN)
@@ -190,6 +140,54 @@ class DConfig_Alive(RConfigParms):
     @interval.setter
     def interval(self, value):
         self.config.set(self._section, CONST.INTERVAL, value)
+
+
+# =============================================================================#
+class DConfig_Listen(RConfigParms):
+    def __init__(self, rconfig: RConfig, server_section):
+        self._server_section = server_section
+        super().__init__(server_section, rconfig, CONST.MAIN)
+
+    @property
+    def server_section(self):
+        return self._server_section
+
+    @property
+    def iface(self) -> str:
+        if self.config.has_option(self._section, CONST.IFACE):
+            return self.config.get(self._section, CONST.IFACE)
+        elif len(self._main_section) != 0 and self.config.has_option(self._main_section, CONST.IFACE):
+            return self.config.get(self._main_section, CONST.IFACE)
+        else:
+            raise RConfigError(CONST.IFACE)
+
+    @iface.setter
+    def iface(self, value):
+        self.config.set(self._section, CONST.IFACE, value)
+
+    @property
+    def port(self) -> int:
+        return self.config.getint(self._section, CONST.PORT, fallback=9094)
+
+    @port.setter
+    def port(self, value):
+        self.config.set(self._section, CONST.PORT, value)
+
+    @property
+    def timeout(self) -> int:
+        return self.config.getint(self._section, CONST.TIMEOUT, fallback=60)
+
+    @timeout.setter
+    def timeout(self, value):
+        self.config.set(self._section, CONST.TIMEOUT, value)
+
+    @property
+    def sockettimeout(self) -> int:
+        return self.config.getint(self._section, CONST.SOCKETTIMEOUT, fallback=60)
+
+    @sockettimeout.setter
+    def sockettimeout(self, value):
+        self.config.set(self._section, CONST.SOCKETTIMEOUT, value)
 
 
 # =============================================================================#
@@ -409,37 +407,182 @@ class DConfig_Slave_Reles(DConfig_Slave):
 
 
 # =============================================================================#
+class DConfig_Slave_Pextron_URP1439TU(DConfig_Slave_Reles):
+    def __init__(self, rconfig: RConfig, slave_num: int):
+        super().__init__(rconfig, slave_num)
+
+
+# =============================================================================#
+class DConfig_Slave_Pextron_URPE7104_v7_18(DConfig_Slave_Reles):
+    def __init__(self, rconfig: RConfig, slave_num: int):
+        super().__init__(rconfig, slave_num)
+
+    @property
+    def dip2(self) -> bool:
+        return self.config.getboolean(self.slave_name, CONST.DIP2, fallback=True)
+
+
+# =============================================================================#
+class DConfig_Slave_Schneider_SEPAM40(DConfig_Slave_Reles):
+    def __init__(self, rconfig: RConfig, slave_num: int):
+        super().__init__(rconfig, slave_num)
+
+
+# =============================================================================#
+class DConfig_Slave_Unilojas_C001(DConfig_Slave):
+    def __init__(self, rconfig: common.RConfig, slave_num: int):
+        super().__init__(rconfig, slave_num)
+
+    @property
+    def modbus_slave(self):
+        return 0  # proprio dispositivo, sempre 0
+
+    @property
+    def batterymonitor(self) -> bool:
+        return self.config.getboolean(self.slave_name, CONST.BATTERYMONITOR, fallback=False)
+
+    @property
+    def pinbattery(self) -> str:
+        return self.config.get(self.slave_name, CONST.PINBATTERY)
+
+    @property
+    def pinresetatmega(self) -> str:
+        return self.config.get(self.slave_name, CONST.PINRESETATMEGA)
+
+    @property
+    def lockenable(self) -> bool:
+        return self.config.getboolean(self.slave_name, CONST.LOCKENABLE, fallback=False)
+
+    @property
+    def pinlock(self) -> str:
+        return self.config.get(self.slave_name, CONST.PINLOCK)
+
+    @property
+    def pinlockled(self) -> str:
+        return self.config.get(self.slave_name, CONST.PINLOCKLED)
+
+    @property
+    def i2c_atmega(self) -> int:
+        atmega = self.config.getint(self.slave_name, CONST.I2C_ATMEGA)
+        if self.config.has_option(self.slave_name, CONST.I2C_DISPLAY):
+            display = self.config.getint(self.slave_name, CONST.I2C_DISPLAY)
+            if atmega == display:
+                raise ValueError('{} = {}'.format(CONST.I2C_ATMEGA, CONST.I2C_DISPLAY))
+        return atmega
+
+    @property
+    def i2c_atmega_addr(self) -> int:
+        return self.config.getint(self.slave_name, CONST.I2C_ATMEGA_ADDR)
+
+    @property
+    def i2c_display(self) -> int:
+        display = self.config.getint(self.slave_name, CONST.I2C_DISPLAY)
+        if self.config.has_option(self.slave_name, CONST.I2C_ATMEGA):
+            atmega = self.config.getint(self.slave_name, CONST.I2C_ATMEGA)
+            if display == atmega:
+                raise ValueError('{} = {}'.format(CONST.I2C_DISPLAY, CONST.I2C_ATMEGA))
+        return display
+
+    @property
+    def i2c_display_addr(self) -> int:
+        return self.config.getint(self.slave_name, CONST.I2C_DISPLAY_ADDR)
+
+    @property
+    def interval(self) -> float:
+        return self.config.getfloat(self.slave_name, CONST.INTERVAL, fallback=500) / 1000
+
+    @property
+    def periodic(self) -> int:
+        return self.config.getint(self.slave_name, CONST.PERIODIC, fallback=0) * 60
+
+    @property
+    def watchdog_relay(self) -> int:
+        return 7  # Fixado no rele 7 para essa funcao
+
+    @property
+    def watchdog_time(self) -> int:
+        return self.config.getint(self.slave_name, CONST.WATCHDOG_TIME, fallback=0)
+
+    @property
+    def tolerance_temp1(self) -> []:
+        return self.get_tolerance(self.slave_name, '{}_{}{}'.format(CONST.TOLERANCE, CONST.TEMP, '1'))
+
+    @property
+    def tolerance_temp2(self) -> []:
+        return self.get_tolerance(self.slave_name, '{}_{}{}'.format(CONST.TOLERANCE, CONST.TEMP, '2'))
+
+    @property
+    def tolerance_temp3(self) -> []:
+        return self.get_tolerance(self.slave_name, '{}_{}{}'.format(CONST.TOLERANCE, CONST.TEMP, '3'))
+
+    @property
+    def tolerance_ad(self) -> []:
+        return self.get_tolerance(self.slave_name, '{}_{}'.format(CONST.TOLERANCE, CONST.AD))
+
+    @property
+    def alarm_temp1(self) -> []:
+        return self.get_range(self.slave_name, '{}_{}{}'.format(CONST.ALARM, CONST.TEMP, '1'))
+
+    @property
+    def alarm_temp2(self) -> []:
+        return self.get_range(self.slave_name, '{}_{}{}'.format(CONST.ALARM, CONST.TEMP, '2'))
+
+    @property
+    def alarm_temp3(self) -> []:
+        return self.get_range(self.slave_name, '{}_{}{}'.format(CONST.ALARM, CONST.TEMP, '3'))
+
+    @property
+    def gpi_ac1(self):
+        return self.config.getint(self.slave_name, '{}{}'.format(CONST.GPI_AC, '1'), fallback=0)
+
+    @property
+    def gpi_ac2(self):
+        return self.config.getint(self.slave_name, '{}{}'.format(CONST.GPI_AC, '2'), fallback=0)
+
+    @property
+    def gpi_ac3(self):
+        return self.config.getint(self.slave_name, '{}{}'.format(CONST.GPI_AC, '3'), fallback=0)
+
+    @property
+    def gpi_ac4(self):
+        return self.config.getint(self.slave_name, '{}{}'.format(CONST.GPI_AC, '4'), fallback=0)
+
+    @property
+    def report_flag(self) -> bool:
+        return self.config.getboolean(self.slave_name, CONST.REPORT, fallback=False)
+
+    @property
+    def alarm_flag(self) -> bool:
+        return self.config.getboolean(self.slave_name, CONST.ALARM, fallback=False)
+
+    @property
+    def event_flag(self) -> bool:
+        return self.config.getboolean(self.slave_name, CONST.EVENT, fallback=False)
+
+    @property
+    def priority_report(self) -> int:
+        return self.config.getint(self.slave_name, '{}_{}'.format(CONST.PRIORITY, CONST.REPORT), fallback=0)
+
+    @property
+    def priority_alarm(self) -> int:
+        return self.config.getint(self.slave_name, '{}_{}'.format(CONST.PRIORITY, CONST.ALARM), fallback=0)
+
+    @property
+    def priority_event(self) -> int:
+        return self.config.getint(self.slave_name, '{}_{}'.format(CONST.PRIORITY, CONST.EVENT), fallback=0)
+
+
+# =============================================================================#
 class DConfig(object):
     @property
     def config(self):
         return self.rconfig.config
 
-    def load(self, rconfig: RConfig, path, args, alternative_path='/etc/dweb'):
-        self.rconfig = rconfig
-        # load config
-        if len(args.config) != 0:
-            p = Path(args.config)
-            if p.is_file():
-                if len(p.parents) > 0:
-                    path = str(p.parents[0])
-                else:
-                    path = str()
-                self.rconfig.read(p.name, path)
-            else:
-                raise FileNotFoundError('file:{}'.format(args.config))
-        else:
-            self.rconfig.read('{}.ini'.format(CONST.APPNAME).lower(), (path, alternative_path))
-        self._load_sections()
-
-    def load_logger(self):
-        if self.config.has_option(CONST.MAIN, CONST.LOGCONFIG):
-            logfile = str(Path(self.rconfig.path_config.parents[0], self.config.get(CONST.MAIN, CONST.LOGCONFIG)))
-            logging.config.fileConfig(logfile, disable_existing_loggers=False)
-
     def is_local_server(self) -> bool:
         return self.rconfig.config.has_section(CONST.LOCALSERVER)
 
-    def _load_sections(self):
+    def load(self, rconfig: RConfig):
+        self.rconfig = rconfig
         self.main = DConfig_Main(self.rconfig)
         self.alive = DConfig_Alive(self.rconfig)
         self.stack = DConfig_Stack(self.rconfig)

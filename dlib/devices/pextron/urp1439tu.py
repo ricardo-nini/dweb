@@ -6,17 +6,16 @@ import time
 import json
 import logging
 import socket
+import rlib.common as common
+from rlib.common import CONST
 import rlib.rmodbus as rmodbus
 from rlib.rmodbus import RByteType as BTYPE
-import rlib.common as common
 import dlib.dsocket as dsocket
 import dlib._dlisten as listen
-import dlib.dreport as dreport
-import dlib.dslave as dslave
-from dlib.dcommon import GLOBAL, is_demanda_time
+from dlib.dcommon import GLOBAL, is_demanda_time, DTolerance
 from dlib.dstatus import STATUS
-from dlib.dconfig import DConfig_Slave_Reles, CONFIG
-from rlib.common import CONST
+import dlib.devices.dbase as dbase
+from dlib.dconfig import CONFIG, DConfig_Slave_Pextron_URP1439TU
 
 ID = {'modelid': 1,
       'name': 'Pextron URP1439TU',
@@ -26,13 +25,7 @@ ID = {'modelid': 1,
 
 
 # =============================================================================#
-class DPextron_URP1439TU_Config(DConfig_Slave_Reles):
-    def __init__(self, rconfig: common.RConfig, slave_num: int):
-        super().__init__(rconfig, slave_num)
-
-
-# =============================================================================#
-class DPextron_URP1439TU_AlarmeRele(dreport.DAlarmRele):
+class Device_Alarm(dbase.DAlarm_Rele):
     _SIZE = 4
     _flag27_0 = 24
     _flag27A = 25
@@ -62,215 +55,215 @@ class DPextron_URP1439TU_AlarmeRele(dreport.DAlarmRele):
     _flag79 = 1  # Religamento
 
     def __init__(self, data=None, offset=0):
-        super().__init__(DPextron_URP1439TU_AlarmeRele._SIZE, data, offset)
+        super().__init__(Device_Alarm._SIZE, data, offset)
 
     @property
     def flag27_0(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag27_0, self._offset)
+        return self._data.is_bit(Device_Alarm._flag27_0, self._offset)
 
     @flag27_0.setter
     def flag27_0(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag27_0, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag27_0, flag, self._offset)
 
     @property
     def flag27A(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag27A, self._offset)
+        return self._data.is_bit(Device_Alarm._flag27A, self._offset)
 
     @flag27A.setter
     def flag27A(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag27A, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag27A, flag, self._offset)
 
     @property
     def flag27B(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag27B, self._offset)
+        return self._data.is_bit(Device_Alarm._flag27B, self._offset)
 
     @flag27B.setter
     def flag27B(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag27B, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag27B, flag, self._offset)
 
     @property
     def flag27C(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag27C, self._offset)
+        return self._data.is_bit(Device_Alarm._flag27C, self._offset)
 
     @flag27C.setter
     def flag27C(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag27C, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag27C, flag, self._offset)
 
     @property
     def flag59A(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag59A, self._offset)
+        return self._data.is_bit(Device_Alarm._flag59A, self._offset)
 
     @flag59A.setter
     def flag59A(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag59A, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag59A, flag, self._offset)
 
     @property
     def flag59B(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag59B, self._offset)
+        return self._data.is_bit(Device_Alarm._flag59B, self._offset)
 
     @flag59B.setter
     def flag59B(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag59B, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag59B, flag, self._offset)
 
     @property
     def flag59C(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag59C, self._offset)
+        return self._data.is_bit(Device_Alarm._flag59C, self._offset)
 
     @flag59C.setter
     def flag59C(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag59C, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag59C, flag, self._offset)
 
     @property
     def flag50A(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag50A, self._offset)
+        return self._data.is_bit(Device_Alarm._flag50A, self._offset)
 
     @flag50A.setter
     def flag50A(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag50A, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag50A, flag, self._offset)
 
     @property
     def flag50B(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag50B, self._offset)
+        return self._data.is_bit(Device_Alarm._flag50B, self._offset)
 
     @flag50B.setter
     def flag50B(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag50B, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag50B, flag, self._offset)
 
     @property
     def flag50C(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag50C, self._offset)
+        return self._data.is_bit(Device_Alarm._flag50C, self._offset)
 
     @flag50C.setter
     def flag50C(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag50C, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag50C, flag, self._offset)
 
     @property
     def flag51A_TD(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag51A_TD, self._offset)
+        return self._data.is_bit(Device_Alarm._flag51A_TD, self._offset)
 
     @flag51A_TD.setter
     def flag51A_TD(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag51A_TD, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag51A_TD, flag, self._offset)
 
     @property
     def flag51B_TD(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag51B_TD, self._offset)
+        return self._data.is_bit(Device_Alarm._flag51B_TD, self._offset)
 
     @flag51B_TD.setter
     def flag51B_TD(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag51B_TD, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag51B_TD, flag, self._offset)
 
     @property
     def flag51C_TD(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag51C_TD, self._offset)
+        return self._data.is_bit(Device_Alarm._flag51C_TD, self._offset)
 
     @flag51C_TD.setter
     def flag51C_TD(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag51C_TD, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag51C_TD, flag, self._offset)
 
     @property
     def flag51A_TP(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag51A_TP, self._offset)
+        return self._data.is_bit(Device_Alarm._flag51A_TP, self._offset)
 
     @flag51A_TP.setter
     def flag51A_TP(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag51A_TP, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag51A_TP, flag, self._offset)
 
     @property
     def flag51B_TP(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag51B_TP, self._offset)
+        return self._data.is_bit(Device_Alarm._flag51B_TP, self._offset)
 
     @flag51B_TP.setter
     def flag51B_TP(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag51B_TP, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag51B_TP, flag, self._offset)
 
     @property
     def flag51C_TP(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag51C_TP, self._offset)
+        return self._data.is_bit(Device_Alarm._flag51C_TP, self._offset)
 
     @flag51C_TP.setter
     def flag51C_TP(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag51C_TP, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag51C_TP, flag, self._offset)
 
     @property
     def flag81(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag81, self._offset)
+        return self._data.is_bit(Device_Alarm._flag81, self._offset)
 
     @flag81.setter
     def flag81(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag81, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag81, flag, self._offset)
 
     @property
     def flag47(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag47, self._offset)
+        return self._data.is_bit(Device_Alarm._flag47, self._offset)
 
     @flag47.setter
     def flag47(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag47, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag47, flag, self._offset)
 
     @property
     def flag86(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag86, self._offset)
+        return self._data.is_bit(Device_Alarm._flag86, self._offset)
 
     @flag86.setter
     def flag86(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag86, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag86, flag, self._offset)
 
     @property
     def flag94(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag94, self._offset)
+        return self._data.is_bit(Device_Alarm._flag94, self._offset)
 
     @flag94.setter
     def flag94(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag94, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag94, flag, self._offset)
 
     @property
     def flag50N(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag50N, self._offset)
+        return self._data.is_bit(Device_Alarm._flag50N, self._offset)
 
     @flag50N.setter
     def flag50N(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag50N, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag50N, flag, self._offset)
 
     @property
     def flag51N_TD(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag51N_TD, self._offset)
+        return self._data.is_bit(Device_Alarm._flag51N_TD, self._offset)
 
     @flag51N_TD.setter
     def flag51N_TD(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag51N_TD, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag51N_TD, flag, self._offset)
 
     @property
     def flag51N_TP(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag51N_TP, self._offset)
+        return self._data.is_bit(Device_Alarm._flag51N_TP, self._offset)
 
     @flag51N_TP.setter
     def flag51N_TP(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag51N_TP, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag51N_TP, flag, self._offset)
 
     @property
     def flag79(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag79, self._offset)
+        return self._data.is_bit(Device_Alarm._flag79, self._offset)
 
     @flag79.setter
     def flag79(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag79, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag79, flag, self._offset)
 
     @property
     def flag79_BR(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag79_BR, self._offset)
+        return self._data.is_bit(Device_Alarm._flag79_BR, self._offset)
 
     @flag79_BR.setter
     def flag79_BR(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag79_BR, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag79_BR, flag, self._offset)
 
     @property
     def flag79_FR(self) -> bool:
-        return self._data.is_bit(DPextron_URP1439TU_AlarmeRele._flag79_FR, self._offset)
+        return self._data.is_bit(Device_Alarm._flag79_FR, self._offset)
 
     @flag79_FR.setter
     def flag79_FR(self, flag):
-        self._data.put_bit(DPextron_URP1439TU_AlarmeRele._flag79_FR, flag, self._offset)
+        self._data.put_bit(Device_Alarm._flag79_FR, flag, self._offset)
 
     def __str__(self):
         return 'flag27_0:{} flag27A:{} flag27B:{} flag27C:{} ' \
@@ -291,14 +284,14 @@ class DPextron_URP1439TU_AlarmeRele(dreport.DAlarmRele):
 
 
 # =============================================================================#
-class DPextron_URP1439TU():
+class Device():
     def __init__(self, slave: int, modbus: rmodbus.RModbusComm):
         self.slave = slave
         self._modbus = modbus
         self.logger = logging.getLogger(__name__)
 
-    def get_meter(self) -> dreport.DReportRele:
-        ret = dreport.DReportRele()
+    def get_meter(self) -> dbase.DReport_Rele:
+        ret = dbase.DReport_Rele()
 
         send = []
         send.append(rmodbus.RModbusReadHoldingRegister.create(self.slave, 0, 1))
@@ -334,8 +327,8 @@ class DPextron_URP1439TU():
 
         return ret
 
-    def get_alarm(self) -> DPextron_URP1439TU_AlarmeRele:
-        ret = DPextron_URP1439TU_AlarmeRele()
+    def get_alarm(self) -> Device_Alarm:
+        ret = Device_Alarm()
 
         send = rmodbus.RModbusReadCoilStatus.create(self.slave, 1, 34)
         recv = self._modbus.exchange(send)
@@ -580,66 +573,67 @@ class DPextron_URP1439TU():
 
 
 # =============================================================================#
-class DPextron_URP1439TU_Thread(dslave.DSlave_Thread):
+class Device_Job(dbase.DSlave_Job):
     def __init__(self, slave_num: int, resources: dict):
         super().__init__(slave_num, resources)
+        self._config = DConfig_Slave_Pextron_URP1439TU(CONFIG.rconfig, slave_num)
         self._stack = resources['stack']
         self._modbus = resources['modbus']
         GLOBAL.modbus[str(slave_num)] = False
-        self._device = DPextron_URP1439TU(self.modbus_slave, self._modbus)
-        self.nameid = '{} [{} addr:{}]'.format(self.slave_name, ID['name'], self.modbus_slave)
+        self._device = Device(self._config.modbus_slave, self._modbus)
+        self.nameid = '{} [{} addr:{}]'.format(self.slave_name, ID['name'], self._config.modbus_slave)
         # interval
-        self._interval = CONFIG.slaves[self.slave_num].interval
+        self._interval = self._config.interval
         # periodic
-        self._periodic = CONFIG.slaves[self.slave_num].periodic
+        self._periodic = self._config.periodic
         # meter_tolerances
         self._meter_tolerances = {}
         # tolerance current
-        self._meter_tolerances['currentA'] = CONFIG.slaves[self.slave_num].tolerance_current
-        self._meter_tolerances['currentB'] = CONFIG.slaves[self.slave_num].tolerance_current
-        self._meter_tolerances['currentC'] = CONFIG.slaves[self.slave_num].tolerance_current
+        self._meter_tolerances['currentA'] = self._config.tolerance_current
+        self._meter_tolerances['currentB'] = self._config.tolerance_current
+        self._meter_tolerances['currentC'] = self._config.tolerance_current
         # tolerance neutro
-        self._meter_tolerances['currentN'] = CONFIG.slaves[self.slave_num].tolerance_neutro
+        self._meter_tolerances['currentN'] = self._config.tolerance_neutro
         # tolerance volt
-        self._meter_tolerances['voltA'] = CONFIG.slaves[self.slave_num].tolerance_voltage
-        self._meter_tolerances['voltB'] = CONFIG.slaves[self.slave_num].tolerance_voltage
-        self._meter_tolerances['voltC'] = CONFIG.slaves[self.slave_num].tolerance_voltage
+        self._meter_tolerances['voltA'] = self._config.tolerance_voltage
+        self._meter_tolerances['voltB'] = self._config.tolerance_voltage
+        self._meter_tolerances['voltC'] = self._config.tolerance_voltage
         # tolerance factor
-        self._meter_tolerances['factor'] = CONFIG.slaves[self.slave_num].tolerance_factor
+        self._meter_tolerances['factor'] = self._config.tolerance_factor
         # tolerance frequency
-        self._meter_tolerances['frequency'] = CONFIG.slaves[self.slave_num].tolerance_frequency
+        self._meter_tolerances['frequency'] = self._config.tolerance_frequency
         # meter_alarms
         self._meter_alarms = {}
         # alarm current
-        self._meter_alarms['currentA'] = CONFIG.slaves[self.slave_num].alarm_current
-        self._meter_alarms['currentB'] = CONFIG.slaves[self.slave_num].alarm_current
-        self._meter_alarms['currentC'] = CONFIG.slaves[self.slave_num].alarm_current
+        self._meter_alarms['currentA'] = self._config.alarm_current
+        self._meter_alarms['currentB'] = self._config.alarm_current
+        self._meter_alarms['currentC'] = self._config.alarm_current
         # alarm neutro
-        self._meter_alarms['currentN'] = CONFIG.slaves[self.slave_num].alarm_neutro
+        self._meter_alarms['currentN'] = self._config.alarm_neutro
         # alarm volt
-        self._meter_alarms['voltA'] = CONFIG.slaves[self.slave_num].alarm_voltage
-        self._meter_alarms['voltB'] = CONFIG.slaves[self.slave_num].alarm_voltage
-        self._meter_alarms['voltC'] = CONFIG.slaves[self.slave_num].alarm_voltage
+        self._meter_alarms['voltA'] = self._config.alarm_voltage
+        self._meter_alarms['voltB'] = self._config.alarm_voltage
+        self._meter_alarms['voltC'] = self._config.alarm_voltage
         # alarm factor
-        self._meter_alarms['factor'] = CONFIG.slaves[self.slave_num].alarm_factor
+        self._meter_alarms['factor'] = self._config.alarm_factor
         # alarm frequency
-        self._meter_alarms['frequency'] = CONFIG.slaves[self.slave_num].alarm_frequency
+        self._meter_alarms['frequency'] = self._config.alarm_frequency
         # report
-        self._report = CONFIG.slaves[self.slave_num].report_flag
+        self._report = self._config.report_flag
         # alarm
-        self._alarm = CONFIG.slaves[self.slave_num].alarm_flag
+        self._alarm = self._config.alarm_flag
         # event
-        self._event = CONFIG.slaves[self.slave_num].event_flag
+        self._event = self._config.event_flag
         # priority report
-        self._priority_report = CONFIG.slaves[self.slave_num].priority_report
+        self._priority_report = self._config.priority_report
         # priority alarm
-        self._priority_alarm = CONFIG.slaves[self.slave_num].priority_alarm
+        self._priority_alarm = self._config.priority_alarm
         # priority event
-        self._priority_event = CONFIG.slaves[self.slave_num].priority_event
+        self._priority_event = self._config.priority_event
         # create tolerance class
-        self._meter_tolerance = dslave.DTolerance(self._meter_tolerances)
+        self._meter_tolerance = DTolerance(self._meter_tolerances)
         # create alarm class
-        self._meter_alarm = dslave.DTolerance(self._meter_alarms)
+        self._meter_alarm = DTolerance(self._meter_alarms)
         # local logger
         self.logger = logging.getLogger(__name__)
 
@@ -648,8 +642,8 @@ class DPextron_URP1439TU_Thread(dslave.DSlave_Thread):
             self.logger.info('Iniciando job "{}" {}'.format(self.local, self.nameid))
             report_time = time.time() + self._periodic
             starting = True
-            previous_meter = dreport.DReportRele()
-            previous_alarm = DPextron_URP1439TU_AlarmeRele()
+            previous_meter = dbase.DReport_Rele()
+            previous_alarm = Device_Alarm()
             demanda_lock = False
             while not self.stopped():
                 try:
@@ -671,7 +665,7 @@ class DPextron_URP1439TU_Thread(dslave.DSlave_Thread):
                                 # send alarm
                                 self._stack.put(self._priority_alarm, time.time(), h, actual_alarm.exchange_data())
                             # update previous data ...
-                            previous_alarm = DPextron_URP1439TU_AlarmeRele(actual_alarm.exchange_data())
+                            previous_alarm = Device_Alarm(actual_alarm.exchange_data())
 
                         # check meter_alarm
                         # get actual meter
@@ -719,7 +713,7 @@ class DPextron_URP1439TU_Thread(dslave.DSlave_Thread):
                                     self._stack.put(self._priority_event, time.time(), h, actual_meter.exchange_data())
 
                             # update previous data ...
-                            previous_meter = dreport.DReportRele(actual_meter.exchange_data())
+                            previous_meter = dbase.DReport_Rele(actual_meter.exchange_data())
 
                     # flag modbus
                     if not GLOBAL.modbus[str(self.slave_num)]:
@@ -739,19 +733,19 @@ class DPextron_URP1439TU_Thread(dslave.DSlave_Thread):
 
         except Exception as err:
             print(type(err))
-            self.logger.fatal('Thread DPextron_URP1439TU_Thread fail:{}'.format(str(err)))
+            self.logger.fatal('Thread Device_Job fail:{}'.format(str(err)))
 
-    def check_event(self, previous: dreport.DReportRele, actual: dreport.DReportRele) -> bool:
+    def check_event(self, previous: dbase.DReport_Rele, actual: dbase.DReport_Rele) -> bool:
         return self._meter_tolerance.check(previous.tolerance(), actual.tolerance())
 
-    def check_alarm(self, previous: dreport.DReportRele, actual: dreport.DReportRele) -> bool:
+    def check_alarm(self, previous: dbase.DReport_Rele, actual: dbase.DReport_Rele) -> bool:
         return self._meter_alarm.check(previous.tolerance(), actual.tolerance())
 
 
 # =============================================================================#
-class DPextron_URP1439TU_Process(listen.DListenProcess):
+class Device_Process(dbase.DSlave_Process):
     def __init__(self, conn: socket, addr, header: dsocket.DSocketHeaderBasic, data: common.RData, resources: dict):
-        super().__init__(conn, addr, header, data, resources)
+        super().__init__(conn, addr, header, data)
         self._modbus = resources['modbus']
         self.logger = logging.getLogger(__name__)
 
@@ -766,7 +760,8 @@ class DPextron_URP1439TU_Process(listen.DListenProcess):
             header = dsocket.DSocketHeader_CmdNow(self.header.exchange_data())
             if header.modelid != 1:
                 raise ValueError('Invalid device on argument.')
-            rele = DPextron_URP1439TU(CONFIG.slaves[header.slave].modbus_slave, self._modbus)
+            config = DConfig_Slave_Pextron_URP1439TU(CONFIG.rconfig, header.slave)
+            rele = Device(config.modbus_slave, self._modbus)
             # Meter
             if header.cmdtype == 0:
                 r = rele.get_meter()

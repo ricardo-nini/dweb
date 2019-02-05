@@ -10,8 +10,8 @@ import dlib.dsocket as dsocket
 import logging
 from rlib.common import RData, CONST
 from dlib.dcommon import GLOBAL, DResetTypes
-from dlib.dconfig import CONFIG
 from dlib.dstatus import STATUS
+from dlib.dconfig import CONFIG
 
 
 # =============================================================================#
@@ -20,20 +20,19 @@ class DStack(threading.Thread):
 
     def __init__(self):
         super().__init__()
-        self._config = CONFIG.stack
-        self._dbfile = self._config.dbfile
-        self._host = self._config.host
-        self._port = self._config.port
-        self._interval = self._config.interval / 1000
-        self._backup = self._config.backuptime * 60
-        self._timeout = self._config.timeout
-        self._backupcount = self._config.backupcount
+        self._dbfile = CONFIG.stack.dbfile
+        self._host = CONFIG.stack.host
+        self._port = CONFIG.stack.port
+        self._interval = CONFIG.stack.interval / 1000
+        self._backup = CONFIG.stack.backuptime * 60
+        self._timeout = CONFIG.stack.timeout
+        self._backupcount = CONFIG.stack.backupcount
         self._count = 0
         self._stop_event = threading.Event()
         self.logger = logging.getLogger(__name__)
 
     def run(self):
-        self.logger.info('Iniciando DStack -> {}'.format(self._config.str()))
+        self.logger.info('Iniciando DStack -> {}'.format(CONFIG.stack.str()))
         try:
             self._con = self._create_db(self._dbfile)
             DStack.threadLock.acquire()

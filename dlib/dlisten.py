@@ -9,8 +9,9 @@ from rlib.common import RData, get_ip_from_iface, CONST
 import dlib.dsocket as dsocket
 from dlib.dcommon import DEVICES_CATALOG
 from dlib.dstatus import STATUS
-from dlib.dconfig import DConfig_Listen, CONFIG
+from dlib.dconfig import CONFIG, DConfig_Listen
 import dlib._dlisten as listen_function
+
 
 # =============================================================================#
 class DListen_Process(threading.Thread):
@@ -40,25 +41,25 @@ class DListen_Process(threading.Thread):
                 if recv_header.slave == 0 and recv_header.modelid in DEVICES_CATALOG:  # slave:0
                     if CONFIG.slaves[0].modelid == 3:  # device modelid: 3
                         import dlib.devices.unilojas.c001 as unilojas_c001
-                        unilojas_c001.DUnilojas_C001_Process(self._conn, self._addr, recv_header, recv_data,
-                                                             self._resources).start()
+                        unilojas_c001.Device_Process(self._conn, self._addr, recv_header, recv_data,
+                                                     self._resources).start()
                     else:  # Erro
                         listen_function.replay_err(self._conn,
                                                    CONST.RETURNCODE_CMD_INVALID)  # envia retorno erro comando
                         self._conn.close()
                 elif recv_header.modelid == 1:  # modelid: Pextron URP1439TU
                     import dlib.devices.pextron.urp1439tu as pextron_urp1439tu
-                    pextron_urp1439tu.DPextron_URP1439TU_Process(self._conn, self._addr, recv_header, recv_data,
-                                                                 self._resources).start()
+                    pextron_urp1439tu.Device_Process(self._conn, self._addr, recv_header, recv_data,
+                                                     self._resources).start()
                 elif recv_header.modelid == 2:  # modelid: Schneider SEPAM40
                     import dlib.devices.schneider.sepam40 as schneider_sepam40
-                    schneider_sepam40.DSchneider_SEPAM40_Process(self._conn, self._addr, recv_header, recv_data,
-                                                                 self._resources).start()
+                    schneider_sepam40.Device_Process(self._conn, self._addr, recv_header, recv_data,
+                                                     self._resources).start()
                 elif recv_header.modelid == 4:  # modelid: Pextron URPE7104_V7_18
                     import dlib.devices.pextron.urpe7104_v7_18 as pextron_urpe7104_v7_18
-                    pextron_urpe7104_v7_18.DPextron_URPE7104_V7_18_Process(self._conn, self._addr, recv_header,
-                                                                           recv_data,
-                                                                           self._resources).start()
+                    pextron_urpe7104_v7_18.Device_Process(self._conn, self._addr, recv_header,
+                                                          recv_data,
+                                                          self._resources).start()
                 else:  # Erro
                     listen_function.replay_err(self._conn,
                                                CONST.RETURNCODE_CMD_INVALID)  # envia retorno erro comando
@@ -89,10 +90,10 @@ class DListen_Process(threading.Thread):
 
 # =============================================================================#
 class DListen(threading.Thread):
-    def __init__(self, resources: dict, config_listen: DConfig_Listen):
+    def __init__(self, resources: dict, section: str):
         threading.Thread.__init__(self)
         self._resources = resources
-        self._config = config_listen
+        self._config = DConfig_Listen(CONFIG.rconfig, section)
         self._iface = self._config.iface
         self._timeout = self._config.timeout
         self._port = self._config.port

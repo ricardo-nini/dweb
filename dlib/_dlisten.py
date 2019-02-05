@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-import threading
 import logging
 import socket
 import os
@@ -55,43 +54,3 @@ def replay_cmd_now_file(conn: socket, filename: str, buffersize=1024):
         os.remove(fileback)
     except Exception as err:
         logger.debug('Erro enviando file:{} {}'.format(filename, str(err)))
-
-
-# =============================================================================#
-class DListenProcess(threading.Thread):
-    def __init__(self, conn: socket, addr, header: dsocket.DSocketHeaderBasic, data: RData, resources: dict):
-        threading.Thread.__init__(self)
-        self._conn = conn
-        self._addr = addr
-        self._header = header
-        self._data = data
-
-    @property
-    def addr(self):
-        return self._addr
-
-    @property
-    def conn(self):
-        return self._conn
-
-    @property
-    def header(self):
-        return self._header
-
-    @property
-    def data(self):
-        return self._data
-
-    def run(self):
-        if self.header.messagetype == dsocket.DSocketMessagesType.CMD_NOW:
-            self.proc_cmd_now()
-        elif self.header.messagetype == dsocket.DSocketMessagesType.CMD:
-            self.proc_cmd()
-        else:
-            replay_err(self._conn, CONST.RETURNCODE_CMD_INVALID)
-
-    def proc_cmd_now(self):
-        raise NotImplementedError
-
-    def proc_cmd(self):
-        raise NotImplementedError

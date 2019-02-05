@@ -8,27 +8,26 @@ import threading
 import traceback
 import time
 from rlib.common import RByteType as BTYPE, RData, int2ip, get_ip_from_iface, CONST
-from dlib.dconfig import CONFIG
 from dlib.dstatus import STATUS
+from dlib.dconfig import CONFIG
 
 
 # =============================================================================#
 class DAlive(threading.Thread):
     def __init__(self):
         super().__init__()
-        self._config = CONFIG.alive
-        self._timeout = self._config.timeout
-        self._host = self._config.host
-        self._port = self._config.port
-        self._interval = self._config.interval
-        self._iface = self._config.iface
+        self._timeout = CONFIG.alive.timeout
+        self._host = CONFIG.alive.host
+        self._port = CONFIG.alive.port
+        self._interval = CONFIG.alive.interval
+        self._iface = CONFIG.alive.iface
         self.STATUS = 0
         self._send_now = False
         self._stop_event = threading.Event()
         self.logger = logging.getLogger(__name__)
 
     def run(self):
-        self.logger.info('Iniciando DAlive -> {}'.format(self._config.str()))
+        self.logger.info('Iniciando DAlive -> {}'.format(CONFIG.alive.str()))
         try:
             real_state = 0
             self._sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
